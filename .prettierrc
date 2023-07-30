@@ -1,0 +1,30 @@
+{
+    "semi": true,
+    "printWidth": 100,
+    "useTabs": false,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "singleQuote": false,
+    "importOrder": [
+        "^(react/(.*)$)|^(react$)",
+        "^(next/(.*)$)|^(next$)",
+        "",
+        "<THIRD_PARTY_MODULES>",
+        "",
+        "^types$",
+        "^@/env(.*)$",
+        "^@/types/(.*)$",
+        "^@/config/(.*)$",
+        "^@/lib/(.*)$",
+        "^@/hooks/(.*)$",
+        "^@/components/ui/(.*)$",
+        "^@/components/(.*)$",
+        "^@/globals.css",
+        "^@/styles/(.*)$",
+        "^@/app/(.*)$",
+        "",
+        "^[./]"
+    ],
+    "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+    "plugins": ["@ianvs/prettier-plugin-sort-imports"]
+}
