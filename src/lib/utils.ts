@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function constructMetadata({
-    title = "Workspace - Manage your projects in one spot.",
+    title = "Workspace - Manage your projects in one spot",
     description = "Workspace is a way to manage your events, projects, and tasks while using AI to automate repetitive tasks",
     icons = "/favicon.ico",
 }: {

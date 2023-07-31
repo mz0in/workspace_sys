@@ -53,7 +53,7 @@ export default {
             },
             fontFamily: {
                 sans: ["var(--font-inter)", "sans"],
-                quicksand: ["var(--font-quicksand)", "sans"],
+                cal:  ["var(--font-calsans)"],
             },
         },
     },
