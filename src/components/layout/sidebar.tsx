@@ -4,6 +4,7 @@ import { Calendar, Inbox } from "lucide-react";
 import type { User } from "next-auth";
 
 import { SidebarItem } from "@/components/layout/sidebar-item";
+import { UserSettingsDropdown } from "@/components/user-settings-dropdown";
 
 interface Props {
     user: User;
@@ -22,6 +23,9 @@ export const Sidebar: React.FC<Props> = ({ user }) => {
                     <span>Calendar</span>
                 </SidebarItem>
             </div>
+            <UserSettingsDropdown
+                user={{ name: user.name || "", email: user.email!, image: user.image || "" }}
+            />
         </aside>
     );
 };

@@ -4,7 +4,7 @@ import type { User } from "@prisma/client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-interface Props {
+export interface Props {
     user: Pick<User, "email" | "image" | "name">;
 }
 
