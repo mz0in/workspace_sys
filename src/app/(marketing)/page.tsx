@@ -1,10 +1,8 @@
 import React from "react";
 
-import { getCurrentUser } from "@/lib/get-current-user";
-import { OAuthLoginButton } from "@/components/oauth-login-button";
+import { OAuthLoginButton } from "@/app/(marketing)/oauth-login-button";
 
 export default async function Home() {
-    const user = await getCurrentUser();
     return (
         <div className="flex flex-col p-2">
             <h1 className="font-cal text-xl">
@@ -17,17 +15,10 @@ export default async function Home() {
             <p className="text-sm">
                 Manage your events, projects, tasks, and automate repetitive tasks using AI.
             </p>
-            {user ? (
-                <div>
-                    <p className="mt-2">
-                        Logged in as <span className="font-medium">{user.email}</span>.
-                    </p>
-                </div>
-            ) : (
-                <div className="w-1/6 mt-2">
-                    <OAuthLoginButton provider="google" />
-                </div>
-            )}
+            <div className="flex items-center space-x-2 mt-2">
+                <OAuthLoginButton provider="google" />
+                <OAuthLoginButton provider="github" />
+            </div>
         </div>
     );
 }

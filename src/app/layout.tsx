@@ -20,6 +20,7 @@ interface Props {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
+            <head />
             <body className={cn(int.className, cal.variable)} suppressHydrationWarning={true}>
                 {children}
             </body>

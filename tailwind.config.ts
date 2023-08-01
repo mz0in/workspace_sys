@@ -16,6 +16,7 @@ export default {
             colors: {
                 "background": "hsl(var(--background))",
                 "foreground": "hsl(var(--foreground))",
+                "sidebar": "hsl(var(--sidebar))",
                 
                 "primary": "hsl(var(--primary))",
                 "primary-foreground": "hsl(var(--primary-foreground)",
@@ -41,8 +42,6 @@ export default {
                 "destructive": "hsl(var(--destructive))",
                 "destructive-foreground": "hsl(var(--destructive-foreground)",
                 
-                "sidebar": "hsl(var(--sidebar))",
-
                 "border": "hsl(var(--border))",
                 "input":  "hsl(var(--input))",
             },

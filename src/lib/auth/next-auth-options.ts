@@ -7,29 +7,29 @@ import { db } from "@/lib/database";
 export const authOptions: NextAuthOptions = {
     callbacks: {
         session({ session, token }) {
+            // prettier-ignore
             const updatedSession: Session = {
                 ...session,
                 user: {
-                    ...session.user,
-                    id: token.id,
-                    email: token.email,
+                    id: token.id, name: token.name, email: token.email, image: token.picture,
                 },
             };
             return updatedSession;
         },
-        jwt: async ({ user, token, trigger }) => {
-            if (user) {
-                token.user = user;
+        jwt: async ({ user, token }) => {
+            const userFromPrisma = await db.user.findFirst({
+                where: { email: token.email },
+            });
+            if (!userFromPrisma) {
+                if (user) {
+                    token.id = user?.id;
+                }
+                return token;
             }
-            if (trigger === "update") {
-                const refreshedUser = await db.user.findUnique({
-                    where: { id: token.sub },
-                });
-                token.user = refreshedUser;
-                token.email = refreshedUser?.email;
-                token.image = refreshedUser?.image;
-            }
-            return token;
+            // prettier-ignore
+            return {
+                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image,
+            };
         },
     },
     adapter: WorkspaceAdapter(db),
