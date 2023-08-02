@@ -7,7 +7,7 @@ const PageHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
         <section
             ref={ref}
             className={cn(
-                "flex max-w-[980px] flex-col items-start gap-2 px-4 pt-6 md:pt-12",
+                "flex max-w-[980px] flex-col items-start gap-2 px-4 pt-6 md:pt-4",
                 className,
             )}
             {...props}

@@ -21,7 +21,7 @@ const classes = {
         lg: "h-10 rounded-md px-8",
     },
     variant: {
-        primary: "bg-indigo-500 text-white hover:bg-indigo-600",
+        primary: "bg-red-500 text-white hover:bg-red-600",
         ghost: "hover:bg-accent hover:text-foreground",
         outline:
             "border border-input bg-background shadow-sm hover:bg-accent hover:text-foreground",

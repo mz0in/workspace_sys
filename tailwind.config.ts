@@ -19,7 +19,7 @@ export default {
                 "sidebar": "hsl(var(--sidebar))",
                 
                 "primary": "hsl(var(--primary))",
-                "primary-foreground": "hsl(var(--primary-foreground)",
+                "primary-foreground": "var(--primary-foreground)",
     
                 "secondary": "hsl(var(--secondary))",
                 "secondary-foreground": "hsl(var(--secondary-foreground)",

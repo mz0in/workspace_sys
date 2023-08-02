@@ -1,5 +1,5 @@
 import React from "react";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/get-current-user";
 import { Sidebar } from "@/components/layout/sidebar";
@@ -12,7 +12,7 @@ interface Props {
 export default async function AppLayout({ children }: Props) {
     const user = await getCurrentUser();
     if (!user) {
-        return notFound();
+        return redirect("/");
     }
     return (
         <div className="flex min-h-screen">

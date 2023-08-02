@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import {
@@ -8,11 +9,32 @@ import {
     FieldPath,
     FieldValues,
     FormProvider,
+    useForm,
     useFormContext,
+    UseFormProps,
 } from "react-hook-form";
+import { TypeOf, ZodSchema } from "zod";
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+
+/**
+ * Custom useForm wrapper hook that uses the zod resolver from react-hook-form.
+ * Ensures type-safety and that the form matches the zod schema.
+ */
+interface ZodFormProps<T extends ZodSchema<any>> extends UseFormProps<TypeOf<T>> {
+    schema: T;
+}
+
+export const useZodForm = <T extends ZodSchema<any>>({
+    schema,
+    ...formConfig
+}: ZodFormProps<T>) => {
+    return useForm({
+        ...formConfig,
+        resolver: zodResolver(schema),
+    });
+};
 
 const Form = FormProvider;
 
