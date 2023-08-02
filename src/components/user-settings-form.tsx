@@ -19,6 +19,7 @@ import {
     useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
 
 interface Props {
     user: Pick<User, "id" | "name">;
@@ -33,7 +34,7 @@ export const UserSettingsForm: React.FC<Props> = ({ user }) => {
     const router = useRouter();
     async function handleSubmit(data: z.infer<typeof editUserSchema>) {
         setSaving(true);
-        await fetch(`/api/user/${user.id}`, {
+        const response = await fetch(`/api/user/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -43,6 +44,16 @@ export const UserSettingsForm: React.FC<Props> = ({ user }) => {
             }),
         });
         setSaving(false);
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong",
+                description: "Your name was not updated. Please try again.",
+                variant: "destructive",
+            });
+        }
+        toast({
+            description: "Your name has been updated successfully.",
+        });
         router.refresh();
     }
     return (
