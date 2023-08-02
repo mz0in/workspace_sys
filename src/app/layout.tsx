@@ -5,6 +5,7 @@ import LocalFont from "next/font/local";
 import "@/globals.css";
 
 import { cn, constructMetadata } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 const int = Inter({ subsets: ["latin"], variable: "--inter" });
 const cal = LocalFont({
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Props) {
             <head />
             <body className={cn(int.className, cal.variable)} suppressHydrationWarning={true}>
                 {children}
+                <Toaster />
             </body>
         </html>
     );

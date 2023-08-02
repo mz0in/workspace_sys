@@ -1,6 +1,6 @@
 import type { NextAuthOptions, Session } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 import WorkspaceAdapter from "@/lib/auth/next-auth-adapter";
 import { db } from "@/lib/database";
