@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 interface Props {
-    user: Pick<User, "id" | "name">;
+    user: Pick<User, "id" | "name" | "email" | "image">;
 }
 
 export const UserSettingsForm: React.FC<Props> = ({ user }) => {
@@ -58,7 +58,11 @@ export const UserSettingsForm: React.FC<Props> = ({ user }) => {
     }
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="w-1/3 space-y-4">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="w-1/2 space-y-4">
+                <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <Input disabled value={user.email} />
+                </FormItem>
                 <FormField
                     control={form.control}
                     name="name"

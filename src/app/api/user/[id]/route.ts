@@ -8,6 +8,26 @@ const routeCtxSchema = z.object({
     params: z.object({ id: z.string().cuid() }),
 });
 
+export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) {
+    try {
+        // validate route context
+        const { params } = routeCtxSchema.parse(ctx);
+
+        // validate a user is logged in and that the user is the same as the context
+        const user = await getCurrentUser();
+        if (!user || user.id !== params.id) {
+            return new Response("Unauthorized", { status: 403 });
+        }
+        await db.user.delete({ where: { id: params.id } });
+        return new Response(null, { status: 200 });
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return new Response(JSON.stringify(error.issues), { status: 422 });
+        }
+        return new Response("Internal Server Error", { status: 500 });
+    }
+}
+
 export async function PATCH(req: Request, ctx: z.infer<typeof routeCtxSchema>) {
     try {
         // validate route context
