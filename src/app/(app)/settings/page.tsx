@@ -31,7 +31,7 @@ export default async function Settings() {
                     <UserSettingsForm 
                         user={{ id: user.id, name: user.name || "", email: user.email!, image: user.image || "" }} 
                     />
-                    <UserDelete userId={user.id} />
+                    <UserDelete user={{ id: user.id, name: user.name || "" }} />
                 </TabsContent>
             </Tabs>
         </div>

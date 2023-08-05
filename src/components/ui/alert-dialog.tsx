@@ -114,7 +114,7 @@ const AlertDialogCancel = React.forwardRef<
         ref={ref}
         className={cn(
             classes["base"],
-            classes["variant"]["primary"],
+            classes["variant"]["outline"],
             classes["size"]["sm"],
             "mt-2 sm:mt-0",
             className,
