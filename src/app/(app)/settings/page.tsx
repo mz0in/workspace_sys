@@ -24,7 +24,7 @@ export default async function Settings() {
                     <TabsTrigger value="preferences">Preferences</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Profile</h1>
+                    <h1 className="text-foreground font-medium text-xl pt-2">Profile</h1>
                     <h3 className="text-sm">Manage your profile information.</h3>
                     <Separator className="my-2" />
                     { /* prettier-ignore */}

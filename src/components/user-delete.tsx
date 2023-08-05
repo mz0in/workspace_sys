@@ -33,7 +33,7 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
     const [confirmName, setConfirmName] = useState<string>("");
 
     const router = useRouter();
-
+    // TODO: Add failure toast
     async function deleteUser() {
         const response = await fetch(`/api/user/${user.id}`, {
             method: "DELETE",
@@ -72,9 +72,9 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
                                     Are you sure you want to delete your account? All data associated with your account
                                     will deleted. <span className="font-medium text-destructive">This action cannot be undone.</span>
                                 </AlertDialogDescription>
-                                <p className="text-sm font-normal pt-2">
+                                <Label className="text-sm font-normal pt-2">
                                     Enter your name <span className="font-medium">{user.name}</span> to confirm.
-                                </p>
+                                </Label>
                                 <Input onChange={(e) => setConfirmName(e.target.value)} />
                             </AlertDialogHeader>
                             <AlertDialogFooter>
