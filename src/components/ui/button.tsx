@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ButtonOrLink, Props } from "@/components/ui/button-or-link";
 
 export type BUTTON_SIZE = "sm" | "md" | "lg";
-export type BUTTON_VARIANT = "primary" | "outline" | "ghost" | "danger" | "none";
+export type BUTTON_VARIANT = "primary" | "outline" | "success" | "ghost" | "danger" | "none";
 
 export type ButtonThemeProps = {
     size?: BUTTON_SIZE;
@@ -23,6 +23,7 @@ export const classes = {
     variant: {
         primary: "bg-indigo-600 text-white hover:bg-indigo-700",
         ghost: "hover:bg-accent hover:text-foreground",
+        success: "bg-green-500 text-white hover:bg-green-600",
         outline:
             "border border-input bg-background shadow-sm hover:bg-accent hover:text-foreground",
         danger: "bg-destructive text-white hover:bg-destructive/90",
