@@ -2,7 +2,7 @@ import type { SubscriptionPlan } from "@/types";
 
 export const FREE_PLAN: SubscriptionPlan = {
     name: "Free",
-    desc: "The free plan offers all basic features for individuals.",
+    desc: "Premium plans offer more of the features you love like workspaces, todolists, automated workflows, and more.",
     stripePriceId: "",
 };
 

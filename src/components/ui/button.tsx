@@ -21,7 +21,7 @@ export const classes = {
         lg: "h-10 rounded-md px-8",
     },
     variant: {
-        primary: "bg-purple-600 text-white hover:bg-purple-700",
+        primary: "bg-zinc-800 text-white hover:bg-zinc-900",
         ghost: "hover:bg-accent hover:text-foreground",
         success: "bg-green-500 text-white hover:bg-green-600",
         outline:
