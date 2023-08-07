@@ -5,8 +5,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { ButtonOrLink, Props } from "@/components/ui/button-or-link";
 
-type BUTTON_SIZE = "sm" | "md" | "lg";
-type BUTTON_VARIANT = "primary" | "outline" | "ghost" | "danger" | "none";
+export type BUTTON_SIZE = "sm" | "md" | "lg";
+export type BUTTON_VARIANT = "primary" | "outline" | "ghost" | "danger" | "none";
 
 export type ButtonThemeProps = {
     size?: BUTTON_SIZE;
@@ -21,7 +21,7 @@ export const classes = {
         lg: "h-10 rounded-md px-8",
     },
     variant: {
-        primary: "bg-red-500 text-white hover:bg-red-600",
+        primary: "bg-indigo-600 text-white hover:bg-indigo-700",
         ghost: "hover:bg-accent hover:text-foreground",
         outline:
             "border border-input bg-background shadow-sm hover:bg-accent hover:text-foreground",

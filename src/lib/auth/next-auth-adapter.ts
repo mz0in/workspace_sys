@@ -63,7 +63,6 @@ export default function WorkspaceAdapter(p: PrismaClient): import("next-auth/ada
             });
             if (!userAndSession) return null;
 
-            console.log(userAndSession);
             const { user, ...session } = userAndSession;
             return { user, session };
         },
