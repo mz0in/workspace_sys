@@ -45,7 +45,6 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
             }),
         });
         if (response?.ok) {
-            router.refresh();
             signOut({ callbackUrl: "/" });
         }
     }

@@ -4,7 +4,6 @@
 
 ## Todo
 - Fix id mismatch error
-- Cancel subscription when user is deleted
 
 - Update subscription settings styles 
 - Custom Invoice history (maybe?)
