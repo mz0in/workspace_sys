@@ -6,7 +6,7 @@ import { stripe } from "@/lib/stripe/stripe";
 import { getUserSubscriptionPlan } from "@/lib/stripe/subscription";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BillingForm } from "@/components/billing-form";
+import { BillingInfo } from "@/components/billing/billing-info";
 import { PageHeader, PageTitle } from "@/components/layout/page-header";
 import { UserDelete } from "@/components/user-delete";
 import { UserSettingsForm } from "@/components/user-settings-form";
@@ -28,9 +28,10 @@ export default async function Settings() {
                 <PageTitle>Settings</PageTitle>
             </PageHeader>
             <Tabs defaultValue="profile">
-                <TabsList className="mx-4 my-2">
+                <TabsList className="mx-4 my-4">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
-                    <TabsTrigger value="subscription">Subscription</TabsTrigger>
+                    <TabsTrigger value="billing">Billing</TabsTrigger>
+                    <TabsTrigger value="preferences">Preferences</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
                     <h1 className="text-foreground font-medium text-xl">Profile</h1>
@@ -42,11 +43,16 @@ export default async function Settings() {
                     />
                     <UserDelete user={{ id: user.id, name: user.name || "" }} />
                 </TabsContent>
-                <TabsContent value="subscription" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Subscription</h1>
+                <TabsContent value="billing" className="flex flex-col px-6 w-full">
+                    <h1 className="text-foreground font-medium text-xl">Billing</h1>
                     <h3 className="text-sm">Manage your billing and subscriptions.</h3>
                     <Separator className="my-2" />
-                    <BillingForm subscription={subscription} isCanceled={isCanceled} />
+                    <BillingInfo subscription={subscription} isCanceled={isCanceled} />
+                </TabsContent>
+                <TabsContent value="preferences" className="flex flex-col px-6 w-full">
+                    <h1 className="text-foreground font-medium text-xl">Preferences</h1>
+                    <h3 className="text-sm">Manage your preferences.</h3>
+                    <Separator className="my-2" />
                 </TabsContent>
             </Tabs>
         </div>

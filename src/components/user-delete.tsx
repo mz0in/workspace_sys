@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import type { User } from "@prisma/client";
 import { AlertTriangle } from "lucide-react";
 import { signOut } from "next-auth/react";
 
-import { cn } from "@/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
     AlertDialog,
@@ -20,7 +18,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { classes } from "@/components/ui/button";
+import { getButtonClasses } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -32,7 +31,6 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
     const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
     const [confirmName, setConfirmName] = useState<string>("");
 
-    const router = useRouter();
     // TODO: Add failure toast
     async function deleteUser() {
         const response = await fetch(`/api/user/${user.id}`, {
@@ -49,7 +47,7 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
         }
     }
     return (
-        <Alert className="flex mt-4 bg-zinc-50">
+        <Alert className="flex mt-4">
             <AlertTriangle className="stroke-destructive h-4 w-4" />
             <div className="flex justify-between w-full">
                 <div className="flex flex-col pt-2">
@@ -62,11 +60,7 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
                 <div className="flex items-center justify-end pt-2">
                     <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                         <AlertDialogTrigger
-                            className={cn(
-                                classes["base"],
-                                classes["size"]["sm"],
-                                classes["variant"]["danger"],
-                            )}
+                            className={getButtonClasses({ size: "sm", variant: "danger" })}
                         >
                             Delete account
                         </AlertDialogTrigger>

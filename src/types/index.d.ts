@@ -4,6 +4,7 @@ export type SubscriptionPlan = {
     name: string;
     desc: string;
     stripePriceId?: string;
+    price: string;
 };
 
 export type UserSubscriptionPlan = SubscriptionPlan &

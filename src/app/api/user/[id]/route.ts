@@ -2,9 +2,9 @@ import * as z from "zod";
 
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { stripe } from "@/lib/stripe/stripe";
 import { getUserSubscriptionPlan } from "@/lib/stripe/subscription";
 import { editUserSchema } from "@/lib/validators/user";
-import { stripe } from "@/lib/stripe/stripe";
 
 const routeCtxSchema = z.object({
     params: z.object({ id: z.string().cuid() }),

@@ -11,4 +11,8 @@
 OR
 - Fix redirect url
 
+- Update toasts
+    - Destructive
+    - Success
+    - Default
 - Workspace models and switching functionality
