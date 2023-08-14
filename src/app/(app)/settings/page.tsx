@@ -28,7 +28,7 @@ export default async function Settings() {
                 <PageTitle>Settings</PageTitle>
             </PageHeader>
             <Tabs defaultValue="profile">
-                <TabsList className="mx-4 my-4">
+                <TabsList className="m-4">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="billing">Billing</TabsTrigger>
                 </TabsList>
