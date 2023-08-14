@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User, WorkspaceUser } from "@prisma/client";
 
 export type SubscriptionPlan = {
     name: string;
@@ -12,3 +12,5 @@ export type UserSubscriptionPlan = SubscriptionPlan &
         stripeCurrentPeriodEnd: number;
         isPremium: boolean;
     };
+
+export type WorkspaceWithUserInfo = Workspace & Pick<WorkspaceUser, "role">;

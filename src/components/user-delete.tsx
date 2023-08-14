@@ -19,7 +19,6 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { getButtonClasses } from "@/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -47,7 +46,7 @@ export const UserDelete: React.FC<Props> = ({ user }) => {
         }
     }
     return (
-        <Alert className="flex mt-4">
+        <Alert className="flex mt-4" variant="destructive">
             <AlertTriangle className="stroke-destructive h-4 w-4" />
             <div className="flex justify-between w-full">
                 <div className="flex flex-col pt-2">

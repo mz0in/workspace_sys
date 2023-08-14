@@ -31,7 +31,6 @@ export default async function Settings() {
                 <TabsList className="mx-4 my-4">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="billing">Billing</TabsTrigger>
-                    <TabsTrigger value="preferences">Preferences</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
                     <h1 className="text-foreground font-medium text-xl">Profile</h1>
@@ -48,11 +47,6 @@ export default async function Settings() {
                     <h3 className="text-sm">Manage your billing and subscriptions.</h3>
                     <Separator className="my-2" />
                     <BillingInfo subscription={subscription} isCanceled={isCanceled} />
-                </TabsContent>
-                <TabsContent value="preferences" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Preferences</h1>
-                    <h3 className="text-sm">Manage your preferences.</h3>
-                    <Separator className="my-2" />
                 </TabsContent>
             </Tabs>
         </div>

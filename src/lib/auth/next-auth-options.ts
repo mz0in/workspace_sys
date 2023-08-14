@@ -29,8 +29,8 @@ export const authOptions: NextAuthOptions = {
             }
             // prettier-ignore
             return {
-                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image,
-            };
+                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image
+            }
         },
     },
     adapter: WorkspaceAdapter(db),
@@ -46,5 +46,29 @@ export const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
+    },
+    pages: {
+        error: "/",
+    },
+    events: {
+        async signIn(msg) {
+            // if user is new, create a personal workspace for them.
+            if (msg.isNewUser) {
+                const user = await db.user.findUniqueOrThrow({
+                    where: {
+                        email: msg.user.email as string,
+                    },
+                    select: { id: true, name: true, email: true },
+                });
+                const workspaceName = user.name?.replace(/ /g, "") ?? user.email.split("@")[0];
+
+                await db.workspace.create({
+                    data: {
+                        name: workspaceName + "Personal",
+                        userId: user.id,
+                    },
+                });
+            }
+        },
     },
 };
