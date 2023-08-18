@@ -2,15 +2,18 @@
 
 import React, { useState } from "react";
 
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+// TODO: Refactor file when implementing real functionality
 
 type Workspace = { id: number; name: string; type: string; color: string };
 const TEST_WORKSPACES: Workspace[] = [
@@ -52,7 +55,7 @@ export const WorkspaceSelector: React.FC<Props> = () => {
     const [active, setActive] = useState<Workspace>(TEST_WORKSPACES[0]);
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="flex justify-between outline-none p-1 rounded-md hover:bg-[#E1E3E7]">
+            <DropdownMenuTrigger className="flex justify-between outline-none p-1 rounded-md hover:bg-[#F3F5F6]">
                 <div className="flex items-center gap-2">
                     <Avatar className="w-9 h-9">
                         <AvatarFallback
@@ -75,9 +78,13 @@ export const WorkspaceSelector: React.FC<Props> = () => {
                 align="start"
                 sideOffset={12}
             >
+                <h1 className="px-1 font-medium text-sm">Your Workspaces</h1>
+                <DropdownMenuSeparator />
                 {TEST_WORKSPACES.map((workspace, i) => (
                     <WorkspaceInfo key={i} workspace={workspace} />
                 ))}
+                <DropdownMenuSeparator />
+                <p>Create New Workspace</p>
             </DropdownMenuContent>
         </DropdownMenu>
     );
@@ -85,9 +92,10 @@ export const WorkspaceSelector: React.FC<Props> = () => {
 
 interface WorkspaceInfoProps {
     workspace: Workspace;
+    isActive?: boolean;
 }
 
-export const WorkspaceInfo: React.FC<WorkspaceInfoProps> = ({ workspace }) => {
+export const WorkspaceInfo: React.FC<WorkspaceInfoProps> = ({ workspace, isActive = false }) => {
     return (
         <div className="flex items-center gap-2 p-1 hover:bg-[#F4F4F5] rounded-md cursor-pointer">
             <Avatar className="w-9 h-9">

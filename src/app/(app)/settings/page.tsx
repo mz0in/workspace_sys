@@ -31,6 +31,7 @@ export default async function Settings() {
                 <TabsList className="m-4">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="billing">Billing</TabsTrigger>
+                    <TabsTrigger value="workspace">Workspace</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
                     <h1 className="text-foreground font-medium text-xl">Profile</h1>

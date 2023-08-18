@@ -21,7 +21,7 @@ export const UserSettingsDropdown: React.FC<DropdownProps> = ({ user }) => {
         <DropdownMenu>
             <DropdownMenuTrigger
                 id={`${user.name}-settings`}
-                className="flex justify-between outline-none rounded-md p-1 hover:bg-[#E1E3E7]"
+                className="flex justify-between outline-none rounded-md p-1 hover:bg-[#F3F5F6]"
             >
                 <UserAvatar user={user} />
                 <ChevronsUpDown className="w-4 h-4 my-auto" />

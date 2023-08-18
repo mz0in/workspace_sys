@@ -20,8 +20,8 @@ const SidebarItem: React.FC<Props> = ({ href, className = "", children }) => {
             className={cn(
                 "flex items-center space-x-2 w-full px-2 py-1 text-sm font-medium cursor-pointer rounded-md",
                 routerPath === href
-                    ? "bg-[#E1E3E7] text-black"
-                    : "text-[#4B5155] hover:bg-[#E1E3E7] hover:text-black",
+                    ? "bg-[#F3F5F6] text-black"
+                    : "text-[#4B5155] hover:bg-[#F3F5F6] hover:text-black",
                 className,
             )}
         >

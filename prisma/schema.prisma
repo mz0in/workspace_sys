@@ -48,6 +48,11 @@ model VerificationToken {
   @@map(name: "verification_tokens")
 }
 
+enum GlobalRole {
+  developer 
+  user
+}
+
 model User {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
@@ -57,6 +62,7 @@ model User {
   emailVerified DateTime?
   name          String?
   image         String?
+  role          GlobalRole @default(user)
 
   accounts Account[]
   sessions Session[]
@@ -125,6 +131,7 @@ model Workspace {
 
   name String
   type WorkspaceType @default(personal)
+  color String @default("#4f46e5")
 
   // a workspace can either belong to a user or a team
   user   User?   @relation(fields: [userId], references: [id])
