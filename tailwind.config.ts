@@ -16,9 +16,10 @@ export default {
             colors: {
                 "background": "hsl(var(--background))",
                 "foreground": "hsl(var(--foreground))",
+                "sidebar": "hsl(var(--sidebar))",
                 
                 "primary": "hsl(var(--primary))",
-                "primary-foreground": "hsl(var(--primary-foreground)",
+                "primary-foreground": "hsl(var(--primary-foreground))",
     
                 "secondary": "hsl(var(--secondary))",
                 "secondary-foreground": "hsl(var(--secondary-foreground)",
@@ -41,8 +42,6 @@ export default {
                 "destructive": "hsl(var(--destructive))",
                 "destructive-foreground": "hsl(var(--destructive-foreground)",
                 
-                "sidebar": "hsl(var(--sidebar))",
-
                 "border": "hsl(var(--border))",
                 "input":  "hsl(var(--input))",
             },
@@ -53,8 +52,9 @@ export default {
             },
             fontFamily: {
                 sans: ["var(--font-inter)", "sans"],
-                quicksand: ["var(--font-quicksand)", "sans"],
+                cal:  ["var(--font-calsans)"],
             },
         },
     },
+    plugins: [require("tailwindcss-animate")],
 } satisfies Config;

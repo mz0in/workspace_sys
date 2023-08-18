@@ -1,11 +1,17 @@
 import * as React from "react";
-import { Inter as FontSans } from "next/font/google";
+import { Inter } from "next/font/google";
+import LocalFont from "next/font/local";
 
-import "@/styles/globals.css";
+import "@/globals.css";
 
 import { cn, constructMetadata } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
-const inter = FontSans({ subsets: ["latin"], variable: "--inter" });
+const int = Inter({ subsets: ["latin"], variable: "--inter" });
+const cal = LocalFont({
+    src: "../../public/fonts/CalSans-SemiBold.ttf",
+    variable: "--font-calsans",
+});
 
 export const metadata = constructMetadata();
 interface Props {
@@ -15,11 +21,10 @@ interface Props {
 export default function RootLayout({ children }: Props) {
     return (
         <html lang="en">
-            <body
-                className={cn("min-h-screen bg-background text-foreground", inter.className)}
-                suppressHydrationWarning={true}
-            >
+            <head />
+            <body className={cn(int.className, cal.variable)} suppressHydrationWarning={true}>
                 {children}
+                <Toaster />
             </body>
         </html>
     );
