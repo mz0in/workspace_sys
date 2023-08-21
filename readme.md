@@ -9,3 +9,6 @@
 
 - Add marketing and AMS emails
 - Add email notification settings
+
+- Delete stripe customer when user is deleted
+- Workspace invite links
