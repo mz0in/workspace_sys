@@ -42,7 +42,7 @@ export const EditWorkspaceForm: React.FC<Props> = ({ workspace }) => {
     useEffect(() => {
         form.setValue("name", workspace.name);
         form.setValue("color", workspace.color);
-    }, [workspace]);
+    }, [form, workspace]);
     const router = useRouter();
     async function handleSubmit(data: z.infer<typeof editWorkspaceSchema>) {
         setSaving(true);

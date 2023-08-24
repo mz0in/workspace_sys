@@ -2,12 +2,15 @@ import { db } from "@/lib/database";
 
 export async function userBelongsToWorkspace(userId: string, workspaceId: string) {
     // TODO: Need to account for if a user is in a team
-    const userInWorkspace = await db.workspace.findFirst({
+    const workspace = await db.workspace.findFirst({
         where: {
             id: workspaceId,
-            userId: userId,
+        },
+        include: {
+            members: true,
         },
     });
-    if (userInWorkspace) return true;
-    return false;
+    if (!workspace) return false;
+    const userInWorkspace = workspace.members.map(member => member.userId).includes(userId);
+    return userInWorkspace;
 }
