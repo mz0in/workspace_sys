@@ -72,10 +72,10 @@ model User {
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 
-  teams      TeamMembership[]
-  workspaces Workspace[]
+  teams TeamMembership[]
 
-  activeWorkspaceId String?
+  activeWorkspaceId   String?
+  WorkspaceMembership WorkspaceMembership[]
 
   @@index([id])
   @@index([email])
@@ -83,6 +83,8 @@ model User {
 }
 
 enum Role {
+  viewer
+  guest
   member
   admin
   owner
@@ -115,10 +117,26 @@ model Team {
 
   members TeamMembership[]
 
-  workspaces Workspace[]
-
   @@index([id])
   @@map(name: "teams")
+}
+
+model WorkspaceMembership {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  role   Role   @default(member)
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+
+  @@index([id])
+  @@index([userId])
+  @@index([workspaceId])
+  @@map(name: "workspace_memberships")
 }
 
 enum WorkspaceType {
@@ -136,14 +154,8 @@ model Workspace {
   color String        @default("#4f46e5")
 
   // a workspace can either belong to a user or a team
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
-
-  team   Team?   @relation(fields: [teamId], references: [id])
-  teamId String?
+  members WorkspaceMembership[]
 
   @@index([id])
-  @@index([userId])
-  @@index([teamId])
   @@map(name: "workspaces")
 }

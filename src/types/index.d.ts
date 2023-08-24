@@ -1,4 +1,4 @@
-import type { User, Workspace } from "@prisma/client";
+import type { User, Workspace, WorkspaceMembership } from "@prisma/client";
 
 export type SubscriptionPlan = {
     name: string;
@@ -13,4 +13,8 @@ export type UserSubscriptionPlan = SubscriptionPlan &
         isPremium: boolean;
     };
 
-export type UserWithWorkspaces = User & Workspace[];
+export type WorkspaceWithUser = WorkspaceMembership & {
+    email: string;
+    name?: string;
+    image?: string;
+};

@@ -8,8 +8,9 @@ import { getUserSubscriptionPlan } from "@/lib/stripe/subscription";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BillingInfo } from "@/components/billing/billing-info";
-import { EditWorkspaceForm } from "@/components/layout/edit-workspace-form";
+import { EditWorkspaceForm } from "@/components/edit-workspace-form";
 import { PageHeader, PageTitle } from "@/components/layout/page-header";
+import { WorkspaceSettings } from "@/components/layout/workspace-settings";
 import { UserDelete } from "@/components/user-delete";
 import { UserSettingsForm } from "@/components/user-settings-form";
 
@@ -24,27 +25,20 @@ export default async function Settings() {
         const stripePlan = await stripe.subscriptions.retrieve(subscription.stripeSubscriptionId);
         isCanceled = stripePlan.cancel_at_period_end;
     }
-    const workspace = await db.workspace.findFirst({
-        where: { id: user.workspace! },
-    });
-    if (!workspace) {
-        return redirect("/");
-    }
+
     return (
         <div className="flex flex-col px-[1rem] md:px-[2rem]">
             <PageHeader>
                 <PageTitle>Settings</PageTitle>
             </PageHeader>
             <Tabs defaultValue="profile">
-                <TabsList className="m-4">
+                <TabsList className="m-3">
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="billing">Billing</TabsTrigger>
                     <TabsTrigger value="workspace">Workspace</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Profile</h1>
-                    <h3 className="text-sm">Manage your profile information.</h3>
-                    <Separator className="my-2" />
+                    <TabHeader title="Profile" description="Manage your profile information." />
                     { /* prettier-ignore */}
                     <UserSettingsForm 
                         user={{ id: user.id, name: user.name || "", email: user.email!, image: user.image || "" }} 
@@ -52,18 +46,25 @@ export default async function Settings() {
                     <UserDelete user={{ id: user.id, name: user.name || "" }} />
                 </TabsContent>
                 <TabsContent value="billing" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Billing</h1>
-                    <h3 className="text-sm">Manage your billing and subscriptions.</h3>
-                    <Separator className="my-2" />
+                    <TabHeader
+                        title="Billing"
+                        description="Manage your billing and subscriptions."
+                    />
                     <BillingInfo subscription={subscription} isCanceled={isCanceled} />
                 </TabsContent>
                 <TabsContent value="workspace" className="flex flex-col px-6 w-full">
-                    <h1 className="text-foreground font-medium text-xl">Workspace</h1>
-                    <h3 className="text-sm">Manage your workspace.</h3>
-                    <Separator className="my-2" />
-                    <EditWorkspaceForm workspace={workspace} />
+                    <TabHeader title="Workspace" description="Manage your personal workspace." />
+                    <WorkspaceSettings user={user} />
                 </TabsContent>
             </Tabs>
         </div>
     );
 }
+
+const TabHeader: React.FC<{ title: string; description: string }> = ({ description, title }) => (
+    <div>
+        <h1 className="text-foreground font-medium text-xl">{title}</h1>
+        <h3 className="text-sm">{description}</h3>
+        <Separator className="my-2" />
+    </div>
+);

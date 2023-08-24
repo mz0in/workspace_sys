@@ -30,7 +30,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 
 interface Props {
-    workspace: Workspace;
+    workspace: Pick<Workspace, "id" | "name" | "type" | "color">;
 }
 
 export const EditWorkspaceForm: React.FC<Props> = ({ workspace }) => {

@@ -13,15 +13,22 @@ interface Props {
 }
 
 export const Sidebar: React.FC<Props> = async ({ user }) => {
-    const workspaces = await db.workspace.findMany({
+    const workspaces = await db.workspaceMembership.findMany({
         where: {
             userId: user.id,
+        },
+        include: {
+            workspace: true,
         },
     });
     return (
         <aside className="flex flex-col justify-between h-screen w-72 bg-sidebar border-r-[1.25px] border-r-accent px-2 pb-6 pt-4">
             <div className="flex flex-col space-y-[.15rem]">
-                <WorkspaceSelect userId={user.id} workspaces={workspaces} active={user.workspace} />
+                <WorkspaceSelect
+                    userId={user.id}
+                    workspaces={workspaces.map((workspace) => workspace.workspace)}
+                    active={user.workspace}
+                />
                 <div className="pt-2">
                     <SidebarItem href="/inbox">
                         <Inbox className="w-4 h-4" />
