@@ -1,18 +1,16 @@
 import React from "react";
 import { redirect } from "next/navigation";
 
-import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { stripe } from "@/lib/stripe/stripe";
 import { getUserSubscriptionPlan } from "@/lib/stripe/subscription";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BillingInfo } from "@/components/billing/billing-info";
-import { EditWorkspaceForm } from "@/components/edit-workspace-form";
 import { PageHeader, PageTitle } from "@/components/layout/page-header";
-import { WorkspaceSettings } from "@/components/layout/workspace-settings";
 import { UserDelete } from "@/components/user-delete";
 import { UserSettingsForm } from "@/components/user-settings-form";
+import { WorkspaceSettings } from "@/app/(app)/settings/workspace-settings";
 
 export default async function Settings() {
     const user = await getCurrentUser();

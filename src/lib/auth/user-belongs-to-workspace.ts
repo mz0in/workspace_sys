@@ -11,6 +11,6 @@ export async function userBelongsToWorkspace(userId: string, workspaceId: string
         },
     });
     if (!workspace) return false;
-    const userInWorkspace = workspace.members.map(member => member.userId).includes(userId);
+    const userInWorkspace = workspace.members.map((member) => member.userId).includes(userId);
     return userInWorkspace;
 }

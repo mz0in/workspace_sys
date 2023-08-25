@@ -9,6 +9,7 @@ import { ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MemberActionsDropdown } from "@/components/layout/workspace-member-table/row-actions-dropdown";
 
 export const columns: ColumnDef<WorkspaceWithUser>[] = [
     {
@@ -54,10 +55,18 @@ export const columns: ColumnDef<WorkspaceWithUser>[] = [
                 <ChevronsUpDown className="w-3 h-3 ms-2" />
             </Button>
         ),
-        cell: ({ row }) => <Badge variant={row.original.role}>{row.original.role}</Badge>,
+        cell: ({ row }) => (
+            <Badge className="capitalize" variant={row.original.role}>
+                {row.original.role}
+            </Badge>
+        ),
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
+        },
     },
     {
         id: "actions",
         header: "Actions",
+        cell: ({ row }) => <MemberActionsDropdown row={row} />,
     },
 ];
