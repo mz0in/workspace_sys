@@ -8,7 +8,9 @@ import { Check, ChevronsUpDown } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import { CreateWorkspaceButton } from "@/components/layout/create-workspace-button";
 
 interface Props {
     userId: string;
@@ -40,6 +42,10 @@ export const WorkspaceSelect: React.FC<Props> = ({ userId, workspaces, active })
             <PopoverContent side="right" align="start">
                 <h1 className="text-xs font-medium pb-1">Your Workspaces</h1>
                 <WorkspaceList workspaces={workspaces} active={selected.id} userId={userId} />
+                <div className="w-full">
+                    <Separator className="my-1" />
+                    <CreateWorkspaceButton />
+                </div>
             </PopoverContent>
         </Popover>
     );
