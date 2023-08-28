@@ -9,11 +9,28 @@ export const editWorkspaceSchema = z
     })
     .refine(
         (data) => {
-            const validOptions = WORKSPACE_THEMES.map((w) => w.value);
-            if (!validOptions.includes(data.color)) {
-                return false;
-            }
-            return true;
+            return validateTheme(data.color);
         },
-        { message: "Invalid workspace theme", path: ["color"] },
+        { message: "Invalid theme", path: ["color"] },
     );
+
+export const newWorkspaceSchema = z
+    .object({
+        name: z.string().min(3).max(32),
+        color: z.string(),
+        type: z.enum(["personal", "team"]),
+    })
+    .refine(
+        (data) => {
+            return validateTheme(data.color);
+        },
+        { message: "Invalid theme", path: ["color"] },
+    );
+
+function validateTheme(color: string): boolean {
+    const validOptions = WORKSPACE_THEMES.map((w) => w.value);
+    if (!validOptions.includes(color)) {
+        return false;
+    }
+    return true;
+}

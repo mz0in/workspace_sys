@@ -9,7 +9,7 @@ import { ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MemberActionsDropdown } from "@/components/layout/workspace-member-table/row-actions-dropdown";
+import { MemberActionsDropdown } from "@/components/workspace/workspace-member-table/row-actions-dropdown";
 
 export const columns: ColumnDef<WorkspaceWithUser>[] = [
     {

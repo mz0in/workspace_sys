@@ -6,8 +6,8 @@ import type { User } from "next-auth";
 
 import { db } from "@/lib/database";
 import { EditWorkspaceForm } from "@/components/edit-workspace-form";
-import { columns } from "@/components/layout/workspace-member-table/columns";
-import { MemberTable } from "@/components/layout/workspace-member-table/member-table";
+import { columns } from "@/components/workspace/workspace-member-table/columns";
+import { MemberTable } from "@/components/workspace/workspace-member-table/member-table";
 
 interface Props {
     user: User;

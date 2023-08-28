@@ -5,8 +5,8 @@ import type { User } from "next-auth";
 
 import { db } from "@/lib/database";
 import { SidebarItem } from "@/components/layout/sidebar-item";
-import { WorkspaceSelect } from "@/components/layout/workspace-select";
 import { UserSettingsDropdown } from "@/components/user-settings-dropdown";
+import { WorkspaceSelect } from "@/components/workspace/workspace-select";
 
 interface Props {
     user: User;

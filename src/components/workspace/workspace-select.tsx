@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
-import { CreateWorkspaceButton } from "@/components/layout/create-workspace-button";
+import { CreateWorkspaceButton } from "@/components/workspace/workspace-create-button";
 
 interface Props {
     userId: string;
@@ -44,7 +44,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ userId, workspaces, active })
                 <WorkspaceList workspaces={workspaces} active={selected.id} userId={userId} />
                 <div className="w-full">
                     <Separator className="my-1" />
-                    <CreateWorkspaceButton />
+                    <CreateWorkspaceButton userId={userId} />
                 </div>
             </PopoverContent>
         </Popover>

@@ -16,7 +16,6 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -25,9 +24,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { MemberTableToolbar } from "@/components/layout/workspace-member-table/table-toolbar";
-
-import { TablePaginationControls } from "./table-pagination-controls";
+import { MemberTableToolbar } from "@/components/workspace/workspace-member-table/table-toolbar";
+import { TablePaginationControls } from "@/components/workspace/workspace-member-table/table-pagination-controls";
 
 interface MemberTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];

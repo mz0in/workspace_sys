@@ -121,6 +121,6 @@ export const EditWorkspaceForm: React.FC<Props> = ({ workspace }) => {
     );
 };
 
-const ThemeDot: React.FC<{ color: string }> = ({ color }) => (
+export const ThemeDot: React.FC<{ color: string }> = ({ color }) => (
     <div style={{ backgroundColor: color }} className="h-[.65rem] w-[.65rem] rounded-md" />
 );
