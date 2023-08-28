@@ -26,7 +26,7 @@ export const UserSettingsDropdown: React.FC<DropdownProps> = ({ user }) => {
                 <UserAvatar user={user} />
                 <ChevronsUpDown className="w-4 h-4 my-auto" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-64" side="right" align="end" sideOffset={12}>
+            <DropdownMenuContent className="w-64" side="right" align="end">
                 <DropdownMenuLink
                     href="/settings"
                     className="flex flex-col items-start gap-y-3 text-foreground"

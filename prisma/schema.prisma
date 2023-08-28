@@ -49,7 +49,7 @@ model VerificationToken {
 }
 
 enum GlobalRole {
-  developer 
+  developer
   user
 }
 
@@ -58,7 +58,7 @@ model User {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  email         String    @unique
+  email         String     @unique
   emailVerified DateTime?
   name          String?
   image         String?
@@ -72,15 +72,19 @@ model User {
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 
-  workspaces Workspace[]
-  teams      TeamMembership[]
+  teams TeamMembership[]
 
-  @@index([email])
+  activeWorkspaceId   String?
+  WorkspaceMembership WorkspaceMembership[]
+
   @@index([id])
+  @@index([email])
   @@map(name: "users")
 }
 
 enum Role {
+  viewer
+  guest
   member
   admin
   owner
@@ -113,10 +117,26 @@ model Team {
 
   members TeamMembership[]
 
-  workspaces Workspace[]
-
   @@index([id])
   @@map(name: "teams")
+}
+
+model WorkspaceMembership {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  role   Role   @default(member)
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+
+  @@index([id])
+  @@index([userId])
+  @@index([workspaceId])
+  @@map(name: "workspace_memberships")
 }
 
 enum WorkspaceType {
@@ -129,19 +149,13 @@ model Workspace {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  name String
-  type WorkspaceType @default(personal)
-  color String @default("#4f46e5")
+  name  String
+  type  WorkspaceType @default(personal)
+  color String        @default("#4f46e5")
 
   // a workspace can either belong to a user or a team
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
-
-  team   Team?   @relation(fields: [teamId], references: [id])
-  teamId String?
+  members WorkspaceMembership[]
 
   @@index([id])
-  @@index([userId])
-  @@index([teamId])
   @@map(name: "workspaces")
 }

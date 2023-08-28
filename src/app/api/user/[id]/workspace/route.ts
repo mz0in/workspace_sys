@@ -1,33 +1,47 @@
 import * as z from "zod";
 
+import { userBelongsToWorkspace } from "@/lib/auth/user-belongs-to-workspace";
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { stripe } from "@/lib/stripe/stripe";
-import { getUserSubscriptionPlan } from "@/lib/stripe/subscription";
-import { editUserSchema } from "@/lib/validators/user";
+import { updateUserWorkspaceSchema } from "@/lib/validators/user";
+import { newWorkspaceSchema } from "@/lib/validators/workspace";
 
 const routeCtxSchema = z.object({
     params: z.object({ id: z.string().cuid() }),
 });
 
-export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) {
+export async function POST(req: Request, ctx: z.infer<typeof routeCtxSchema>) {
     try {
-        // validate route context
         const { params } = routeCtxSchema.parse(ctx);
 
-        // validate a user is logged in and that the user is the same as the context
         const user = await getCurrentUser();
         if (!user || user.id !== params.id) {
             return new Response("Unauthorized", { status: 403 });
         }
-        const subscription = await getUserSubscriptionPlan(user.id);
-        if (subscription.isPremium && subscription.stripeSubscriptionId) {
-            await stripe.subscriptions.update(subscription.stripeSubscriptionId, {
-                cancel_at_period_end: true,
-            });
-            // TODO: Delete stripe customer
-        }
-        await db.user.delete({ where: { id: params.id } });
+        const json = await req.json();
+        const body = newWorkspaceSchema.parse(json);
+
+        const workspace = await db.workspace.create({
+            data: {
+                name: body.name,
+                color: body.color,
+            },
+        });
+        await db.workspaceMembership.create({
+            data: {
+                userId: user.id,
+                workspaceId: workspace.id,
+                role: "owner",
+            },
+        });
+        await db.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                activeWorkspaceId: workspace.id,
+            },
+        });
         return new Response(null, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
@@ -39,23 +53,23 @@ export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) 
 
 export async function PATCH(req: Request, ctx: z.infer<typeof routeCtxSchema>) {
     try {
-        // validate route context
         const { params } = routeCtxSchema.parse(ctx);
 
-        // validate a user is logged in and that the user is the same as the context
         const user = await getCurrentUser();
         if (!user || user.id !== params.id) {
             return new Response("Unauthorized", { status: 403 });
         }
-        const body = await req.json();
-        const payload = editUserSchema.parse(body);
-
+        const json = await req.json();
+        const body = updateUserWorkspaceSchema.parse(json);
+        if (!userBelongsToWorkspace(user.id, body.newWorkspaceId)) {
+            return new Response("Unauthorized", { status: 403 });
+        }
         await db.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                name: payload.name,
+                activeWorkspaceId: body.newWorkspaceId,
             },
         });
         return new Response(null, { status: 200 });

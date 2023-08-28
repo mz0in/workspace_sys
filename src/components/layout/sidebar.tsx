@@ -3,19 +3,32 @@ import React from "react";
 import { Calendar, Inbox } from "lucide-react";
 import type { User } from "next-auth";
 
+import { db } from "@/lib/database";
 import { SidebarItem } from "@/components/layout/sidebar-item";
 import { UserSettingsDropdown } from "@/components/user-settings-dropdown";
-import { WorkspaceSelector } from "@/components/workspace-selector";
+import { WorkspaceSelect } from "@/components/workspace/workspace-select";
 
 interface Props {
     user: User;
 }
 
 export const Sidebar: React.FC<Props> = async ({ user }) => {
+    const workspaces = await db.workspaceMembership.findMany({
+        where: {
+            userId: user.id,
+        },
+        include: {
+            workspace: true,
+        },
+    });
     return (
         <aside className="flex flex-col justify-between h-screen w-72 bg-sidebar border-r-[1.25px] border-r-accent px-2 pb-6 pt-4">
             <div className="flex flex-col space-y-[.15rem]">
-                <WorkspaceSelector />
+                <WorkspaceSelect
+                    userId={user.id}
+                    workspaces={workspaces.map((workspace) => workspace.workspace)}
+                    active={user.workspace}
+                />
                 <div className="pt-2">
                     <SidebarItem href="/inbox">
                         <Inbox className="w-4 h-4" />

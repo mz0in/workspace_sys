@@ -1,5 +1,8 @@
 import React from "react";
 
-export default function Inbox() {
-    return <div>Inbox</div>;
+import { getCurrentUser } from "@/lib/get-current-user";
+
+export default async function Inbox() {
+    const user = await getCurrentUser();
+    return <pre>{JSON.stringify(user, null, 2)}</pre>;
 }

@@ -13,6 +13,7 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     id: token.id, name: token.name, email: token.email, image: token.picture,
+                    workspace: token.workspace,
                 },
             };
             return updatedSession;
@@ -29,7 +30,8 @@ export const authOptions: NextAuthOptions = {
             }
             // prettier-ignore
             return {
-                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image
+                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image,
+                workspace: userFromPrisma.activeWorkspaceId,
             }
         },
     },
@@ -60,12 +62,25 @@ export const authOptions: NextAuthOptions = {
                     },
                     select: { id: true, name: true, email: true },
                 });
-                const workspaceName = user.name?.replace(/ /g, "") ?? user.email.split("@")[0];
 
-                await db.workspace.create({
+                const workspace = await db.workspace.create({
                     data: {
-                        name: workspaceName + "Personal",
+                        name: "Personal Workspace",
+                    },
+                });
+                await db.workspaceMembership.create({
+                    data: {
                         userId: user.id,
+                        workspaceId: workspace.id,
+                        role: "owner",
+                    },
+                });
+                await db.user.update({
+                    where: {
+                        id: user.id,
+                    },
+                    data: {
+                        activeWorkspaceId: workspace.id,
                     },
                 });
             }
