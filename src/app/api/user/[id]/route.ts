@@ -25,6 +25,7 @@ export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) 
             await stripe.subscriptions.update(subscription.stripeSubscriptionId, {
                 cancel_at_period_end: true,
             });
+            // TODO: Delete stripe customer
         }
         await db.user.delete({ where: { id: params.id } });
         return new Response(null, { status: 200 });

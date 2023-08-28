@@ -6,6 +6,7 @@ import type { User } from "next-auth";
 
 import { db } from "@/lib/database";
 import { EditWorkspaceForm } from "@/components/edit-workspace-form";
+import { WorkspaceDelete } from "@/components/workspace/workspace-delete";
 import { columns } from "@/components/workspace/workspace-member-table/columns";
 import { MemberTable } from "@/components/workspace/workspace-member-table/member-table";
 
@@ -52,6 +53,7 @@ export const WorkspaceSettings: React.FC<Props> = async ({ user }) => {
                     })}
                 />
             </div>
+            <WorkspaceDelete workspace={{ id: workspace.id, name: workspace.name }}/>
         </div>
     );
 };

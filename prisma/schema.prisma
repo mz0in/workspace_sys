@@ -130,7 +130,7 @@ model WorkspaceMembership {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
   @@index([id])

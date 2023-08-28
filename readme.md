@@ -15,3 +15,4 @@
 - Role badges
 - Settings page structure
 - Move theme selector into separate component
+- Create a reusable "delete alert" component?

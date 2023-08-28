@@ -24,8 +24,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { MemberTableToolbar } from "@/components/workspace/workspace-member-table/table-toolbar";
 import { TablePaginationControls } from "@/components/workspace/workspace-member-table/table-pagination-controls";
+import { MemberTableToolbar } from "@/components/workspace/workspace-member-table/table-toolbar";
 
 interface MemberTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
