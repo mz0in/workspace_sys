@@ -40,8 +40,9 @@ export const WorkspaceSelect: React.FC<Props> = ({ userId, workspaces, active })
                 <ChevronsUpDown className="w-4 h-4" />
             </PopoverTrigger>
             <PopoverContent side="right" align="start">
-                <h1 className="text-xs font-medium pb-1">Your Workspaces</h1>
+                <h1 className="text-xs font-medium pb-1">Personal Workspaces</h1>
                 <WorkspaceList workspaces={workspaces} active={selected.id} userId={userId} />
+                <h1 className="text-xs font-medium py-1">Teams</h1>
                 <div className="w-full">
                     <Separator className="my-1" />
                     <CreateWorkspaceButton userId={userId} />

@@ -34,6 +34,7 @@ export default async function Settings() {
                     <TabsTrigger value="profile">Profile</TabsTrigger>
                     <TabsTrigger value="billing">Billing</TabsTrigger>
                     <TabsTrigger value="workspace">Workspace</TabsTrigger>
+                    <TabsTrigger value="teams">Teams</TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile" className="flex flex-col px-6 w-full">
                     <TabHeader title="Profile" description="Manage your profile information." />
@@ -53,6 +54,9 @@ export default async function Settings() {
                 <TabsContent value="workspace" className="flex flex-col px-6 w-full">
                     <TabHeader title="Workspace" description="Manage your personal workspace." />
                     <WorkspaceSettings user={user} />
+                </TabsContent>
+                <TabsContent value="teams" className="flex flex-col px-6 w-full">
+                    <TabHeader title="Teams" description="Manage your teams and memberships." />
                 </TabsContent>
             </Tabs>
         </div>

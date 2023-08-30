@@ -9,6 +9,7 @@
 
 - Delete stripe customer when user is deleted
 - Workspace invite links
+- When deleting or creating a workspace, redirect to a cool "loading" screen
 
 
 ## Specific AMS Refactor Tasks
