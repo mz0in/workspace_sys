@@ -106,7 +106,7 @@ export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) 
                 id: workspace.id,
             },
         });
-        console.log('here2');
+        console.log("here2");
         return new Response(null, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {

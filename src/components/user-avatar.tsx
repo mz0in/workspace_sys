@@ -1,11 +1,11 @@
 import React from "react";
 
-import type { User } from "@prisma/client";
+import type { User } from "next-auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export interface Props {
-    user: Pick<User, "email" | "image" | "name">;
+    user: User;
 }
 
 export const UserAvatar: React.FC<Props> = ({ user }) => {

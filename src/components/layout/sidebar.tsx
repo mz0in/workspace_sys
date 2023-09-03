@@ -5,8 +5,8 @@ import type { User } from "next-auth";
 
 import { db } from "@/lib/database";
 import { SidebarItem } from "@/components/layout/sidebar-item";
+import { WorkspaceSelect } from "@/components/layout/workspace-select";
 import { UserSettingsDropdown } from "@/components/user-settings-dropdown";
-import { WorkspaceSelect } from "@/components/workspace/workspace-select";
 
 interface Props {
     user: User;
@@ -29,18 +29,18 @@ export const Sidebar: React.FC<Props> = async ({ user }) => {
             team: {
                 include: {
                     members: true,
-                }
+                    ownedWorkspaces: true,
+                },
             },
         },
     });
-    console.log(teams)
     return (
         <aside className="flex flex-col justify-between h-screen w-72 bg-sidebar border-r-[1.25px] border-r-accent px-2 pb-6 pt-4">
             <div className="flex flex-col space-y-[.15rem]">
                 <WorkspaceSelect
-                    userId={user.id}
                     workspaces={workspaces.map((workspace) => workspace.workspace)}
-                    active={user.workspace}
+                    user={user}
+                    teams={teams}
                 />
                 <div className="pt-2">
                     <SidebarItem href="/inbox">
@@ -53,9 +53,7 @@ export const Sidebar: React.FC<Props> = async ({ user }) => {
                     </SidebarItem>
                 </div>
             </div>
-            <UserSettingsDropdown
-                user={{ name: user.name || "", email: user.email!, image: user.image || "" }}
-            />
+            <UserSettingsDropdown user={user} />
         </aside>
     );
 };
