@@ -16,3 +16,7 @@ export const WORKSPACE_THEMES = [
     { value: "#ec4899", label: "Pink" },
     { value: "#f43f5e", label: "Rose" },
 ];
+
+export function getRandomTheme() {
+    return WORKSPACE_THEMES[Math.floor(Math.random() * WORKSPACE_THEMES.length)].value;
+}

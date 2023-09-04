@@ -27,7 +27,7 @@ export const newWorkspaceSchema = z
         { message: "Invalid theme", path: ["color"] },
     );
 
-function validateTheme(color: string): boolean {
+export function validateTheme(color: string): boolean {
     const validOptions = WORKSPACE_THEMES.map((w) => w.value);
     if (!validOptions.includes(color)) {
         return false;

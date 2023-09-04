@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
+import { CreateNewTeam } from "@/components/create-new-team";
 import { UserAvatar } from "@/components/user-avatar";
 import { CreateWorkspaceButton } from "@/components/workspace/workspace-create-button";
 
@@ -46,40 +47,49 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                 side="right"
                 className="grid grid-cols-[1fr_5px_1fr] w-fit gap-2"
             >
-                <div className="w-64">
-                    <h1 className="text-xs font-medium pb-1">Personal Account</h1>
-                    <div
-                        className={hoverClass}
-                        onMouseOver={() => {
-                            setDisplayWorkspaces(() => {
-                                return workspaces.filter((w) => w.type === "personal");
-                            });
-                        }}
-                    >
-                        <UserAvatar user={user} />
-                        {active.type === "personal" && <Check className="w-4 h-4" />}
-                    </div>
-                    <h1 className="text-xs font-medium py-1">Teams</h1>
-                    {teams.map((team, i) => (
+                <div className="flex flex-col justify-between w-60">
+                    <div>
+                        <h1 className="text-xs font-medium pb-1">Personal Account</h1>
                         <div
-                            key={i}
                             className={hoverClass}
                             onMouseOver={() => {
                                 setDisplayWorkspaces(() => {
-                                    return team.team.ownedWorkspaces;
+                                    return workspaces.filter((w) => w.type === "personal");
                                 });
                             }}
                         >
-                            <SingleTeam teamInfo={team} />
-                            {active.ownerTeamId === team.team.id && <Check className="w-4 h-4" />}
+                            <UserAvatar user={user} />
+                            {active.type === "personal" && <Check className="w-4 h-4" />}
                         </div>
-                    ))}
+                        <h1 className="text-xs font-medium py-1">Teams</h1>
+                        {teams.map((team, i) => (
+                            <div
+                                key={i}
+                                className={hoverClass}
+                                onMouseOver={() => {
+                                    setDisplayWorkspaces(() => {
+                                        return team.team.ownedWorkspaces;
+                                    });
+                                }}
+                            >
+                                <SingleTeam teamInfo={team} />
+                                {active.ownerTeamId === team.team.id && (
+                                    <Check className="w-4 h-4" />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <CreateNewTeam user={user} />
                 </div>
                 <Separator orientation="vertical" />
                 <div className="flex flex-col justify-between">
                     <div>
                         <h1 className="text-xs font-medium pb-1">Workspaces</h1>
-                        <WorkspaceList workspaces={displayWorkspaces} active={active.id} user={user} />
+                        <WorkspaceList
+                            workspaces={displayWorkspaces}
+                            active={active.id}
+                            user={user}
+                        />
                     </div>
                     <CreateWorkspaceButton userId={user.id} />
                 </div>
