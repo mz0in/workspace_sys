@@ -35,7 +35,7 @@ export const MultiTagsInput: React.FC<Props> = ({ form, name, labelText }) => {
     useEffect(() => {
         // Update form value with the list of tags
         form.setValue(name, tags);
-    }, [form, tags]);
+    }, [form, tags, name]);
     return (
         <FormItem>
             <FormLabel>{labelText}</FormLabel>

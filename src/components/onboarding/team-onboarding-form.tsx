@@ -143,7 +143,7 @@ export const WorkspaceStep: React.FC<WorkspaceStepProps> = ({ form }) => {
     return (
         <React.Fragment>
             <DialogHeader>
-                <DialogTitle>Let's create your first workspace</DialogTitle>
+                <DialogTitle>Let&apos;s create your first workspace</DialogTitle>
             </DialogHeader>
             <FormField
                 control={form.control}
