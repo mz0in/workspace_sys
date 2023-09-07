@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { X } from "lucide-react";
 import type { User } from "next-auth";
-import { ControllerRenderProps, FieldValues, UseFormReturn } from "react-hook-form";
-import z from "zod";
+import { FieldValues, UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
 import { getRandomTheme } from "@/config/constants";
 import { newTeamSchema } from "@/lib/validators/team";
-import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
     Form,
@@ -21,78 +21,83 @@ import {
     useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { MultiTagsInput } from "@/components/multi-tags-input";
+import { ButtonControls } from "@/components/onboarding/onboarding-button-controls";
 
 interface Props {
     user: User;
+    close: () => void;
 }
 
-export const TeamOnboardingForm: React.FC<Props> = ({ user }) => {
+export const TeamOnboardingForm: React.FC<Props> = ({ user, close }) => {
     const [step, setStep] = useState<string>("name");
     const form = useZodForm({
         schema: newTeamSchema,
-        mode: "onChange",
         defaultValues: {
             name: `${user.name}'s team`,
-            slug: "",
+            ownerId: user.id,
             color: getRandomTheme(),
+            workspace: "New Workspace",
+            emails: [],
         },
+        mode: "onChange",
     });
-    function handleSumbit(data: z.infer<typeof newTeamSchema>) {}
+    const router = useRouter();
+    async function handleSumbit(data: z.infer<typeof newTeamSchema>) {
+        console.log(data);
+        // const response = await fetch("/api/team", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         ...data,
+        //     }),
+        // });
+        // if (!response?.ok) {
+        //     toast({
+        //         title: "Something went wrong",
+        //         description: "Your workspace was not updated. Please try again.",
+        //         variant: "destructive",
+        //     });
+        // }
+        close();
+        router.refresh();
+    }
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSumbit)}>
                 {step === "name" ? (
                     <div className="space-y-2">
                         <TeamNameStep form={form} />
-                        <div className="flex justify-end w-full">
-                            <Button
-                                size="sm"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setStep("invite");
-                                }}
-                            >
-                                Next
-                            </Button>
-                        </div>
+                        <ButtonControls nextStep="invite" updateStep={(next) => setStep(next)} />
                     </div>
                 ) : step === "invite" ? (
                     <div className="space-y-2">
-                        <div className="flex justify-end w-full gap-2">
-                            <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setStep("name");
-                                }}
-                            >
-                                Back
-                            </Button>
-                            <Button
-                                size="sm"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setStep("workspace");
-                                }}
-                            >
-                                Next
-                            </Button>
-                        </div> 
+                        <InviteMembersStep form={form} />
+                        <ButtonControls
+                            nextStep="workspace"
+                            prevStep="name"
+                            updateStep={(next) => setStep(next)}
+                        />
                     </div>
                 ) : (
-                    <div></div>
+                    <div className="space-y-2">
+                        <WorkspaceStep form={form} />
+                        <ButtonControls prevStep="invite" updateStep={(next) => setStep(next)} />
+                    </div>
                 )}
             </form>
         </Form>
     );
 };
 
-interface NameProps<T extends FieldValues = any> {
+interface NameStepProps<T extends FieldValues = any> {
     form: UseFormReturn<T>;
 }
 
-export const TeamNameStep: React.FC<NameProps> = ({ form }) => {
+export const TeamNameStep: React.FC<NameStepProps> = ({ form }) => {
     return (
         <React.Fragment>
             <DialogHeader>
@@ -115,14 +120,49 @@ export const TeamNameStep: React.FC<NameProps> = ({ form }) => {
     );
 };
 
-interface StepFormButtonControlProps {
-    backStep: string;
-    nextStep: string;
-    updateStep: () => void;
+interface InviteStepProps<T extends FieldValues = any> {
+    form: UseFormReturn<T>;
 }
 
-export const StepFormButtonControls: React.FC<StepFormButtonControlProps> = ({ backStep, nextStep }) => {
+export const InviteMembersStep: React.FC<InviteStepProps> = ({ form }) => {
     return (
-        <div className="flex justify-end w-full gap-2"></div>
+        <React.Fragment>
+            <DialogHeader>
+                <DialogTitle>Invite teammates</DialogTitle>
+            </DialogHeader>
+            <MultiTagsInput form={form} name="emails" labelText="Send invites" />
+        </React.Fragment>
     );
+};
+
+interface WorkspaceStepProps<T extends FieldValues = any> {
+    form: UseFormReturn<T>;
 }
+
+export const WorkspaceStep: React.FC<WorkspaceStepProps> = ({ form }) => {
+    return (
+        <React.Fragment>
+            <DialogHeader>
+                <DialogTitle>Let's create your first workspace</DialogTitle>
+            </DialogHeader>
+            <FormField
+                control={form.control}
+                name="workspace"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                            <Input
+                                placeholder="New workspace"
+                                autoFocus
+                                autoComplete="off"
+                                {...field}
+                            />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+        </React.Fragment>
+    );
+};
