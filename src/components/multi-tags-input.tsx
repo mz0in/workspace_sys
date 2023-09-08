@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { X } from "lucide-react";
 import { FieldValues, UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
 import { FormDescription, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -20,10 +21,12 @@ export const MultiTagsInput: React.FC<Props> = ({ form, name, labelText }) => {
     const [tags, setTags] = useState<string[]>(form.getValues(name));
     function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         const next = ref!.current!.value;
-        if (e.key === "Tab" && next.length > 0) {
+        if (e.key === "Tab" && next.length > 0 && !tags.includes(next)) {
             setTags([...tags, next]);
             ref!.current!.value = "";
-            ref!.current!.focus();
+            setTimeout(() => {
+                ref!.current!.focus();
+            }, 0);
         }
         if (e.key === "Backspace" && next.length === 0 && tags.length > 0) {
             handleRemove(tags[tags.length-1]);
@@ -41,7 +44,7 @@ export const MultiTagsInput: React.FC<Props> = ({ form, name, labelText }) => {
             <FormLabel>{labelText}</FormLabel>
             <div className="flex flex-wrap border rounded-md">
                 {tags.length > 0 && (
-                    <ul className="flex items-center gap-2 p-1">
+                    <ul className="flex items-center flex-wrap gap-1 p-1">
                         {tags.map((tag, i) => (
                             <li key={`tag-${i}`} className={tagClass}>
                                 {tag}
@@ -51,10 +54,10 @@ export const MultiTagsInput: React.FC<Props> = ({ form, name, labelText }) => {
                     </ul>
                 )}
                 <Input
-                    autoFocus
-                    className="border-0 outline-none"
-                    onKeyDown={handleKeyPress}
                     ref={ref}
+                    autoFocus={true}
+                    className="border-0"
+                    onKeyDown={handleKeyPress}
                 />
             </div>
             <FormDescription>
