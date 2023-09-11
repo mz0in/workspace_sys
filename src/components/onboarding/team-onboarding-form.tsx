@@ -1,19 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { X } from "lucide-react";
 import type { User } from "next-auth";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 import { getRandomTheme } from "@/config/constants";
+import { slugify } from "@/lib/utils";
 import { newTeamSchema } from "@/lib/validators/team";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -35,14 +36,24 @@ export const TeamOnboardingForm: React.FC<Props> = ({ user, close }) => {
     const form = useZodForm({
         schema: newTeamSchema,
         defaultValues: {
-            name: `${user.name}'s team`,
+            name: "",
+            slug: "",
             ownerId: user.id,
             color: getRandomTheme(),
-            workspace: "New Workspace",
+            workspace: "Untitled Workspace",
             emails: [],
         },
         mode: "onChange",
     });
+    useEffect(() => {
+        const errs = Object.keys(form.formState.errors);
+        if (form.formState.isSubmitting) {
+            const step1 = ["name", "slug"];
+            const step2 = ["emails"];
+            if (step1.some((err) => errs.includes(err))) setStep("name");
+            else if (step2.some((err) => errs.includes(err))) setStep("invite");
+        }
+    }, [form.formState]);
     const router = useRouter();
     async function handleSumbit(data: z.infer<typeof newTeamSchema>) {
         console.log(data);
@@ -98,6 +109,12 @@ interface NameStepProps<T extends FieldValues = any> {
 }
 
 export const TeamNameStep: React.FC<NameStepProps> = ({ form }) => {
+    const watchName = form.watch("name");
+    useEffect(() => {
+        if (!Object.keys(form.formState.dirtyFields).includes("slug")) {
+            form.setValue("slug", slugify(watchName));
+        }
+    }, [watchName, form]);
     return (
         <React.Fragment>
             <DialogHeader>
@@ -110,9 +127,28 @@ export const TeamNameStep: React.FC<NameStepProps> = ({ form }) => {
                     <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                            <Input placeholder="Name" autoComplete="off" autoFocus {...field} />
+                            <Input
+                                placeholder="Acme Inc."
+                                autoComplete="off"
+                                autoFocus
+                                {...field}
+                            />
                         </FormControl>
                         <FormMessage />
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Team URL</FormLabel>
+                        <FormControl>
+                            <Input addPrefix="workspace.com/" autoComplete="off" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        <FormDescription>A unique identifier for your team.</FormDescription>
                     </FormItem>
                 )}
             />
@@ -125,12 +161,19 @@ interface InviteStepProps<T extends FieldValues = any> {
 }
 
 export const InviteMembersStep: React.FC<InviteStepProps> = ({ form }) => {
+    const errors = form.formState.errors;
     return (
         <React.Fragment>
             <DialogHeader>
                 <DialogTitle>Invite teammates</DialogTitle>
             </DialogHeader>
-            <MultiTagsInput form={form} name="emails" labelText="Send invites" />
+            <MultiTagsInput
+                form={form}
+                name="emails"
+                labelText="Send invites"
+                error={Object.keys(errors).includes("emails")}
+                errorMsg="Please provide valid email addresses only."
+            />
         </React.Fragment>
     );
 };
@@ -160,6 +203,10 @@ export const WorkspaceStep: React.FC<WorkspaceStepProps> = ({ form }) => {
                             />
                         </FormControl>
                         <FormMessage />
+                        <FormDescription>
+                            Workspaces are shared environments where you can collaborate with
+                            teammates on projects, share events, and much more!
+                        </FormDescription>
                     </FormItem>
                 )}
             />

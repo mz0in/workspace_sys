@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             return (
                 <div className="flex items-center h-7 w-full rounded-md text-sm border border-input space-x-1">
                     {addPrefix && (
-                        <div className="flex h-7 p-1 border-r border-input bg-zinc-100">
+                        <div className="flex h-7 p-1 px-2 border-r border-input bg-zinc-100">
                             {addPrefix}
                         </div>
                     )}
@@ -27,7 +27,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         {...props}
                     />
                     {addSuffix && (
-                        <div className="flex h-7 p-1 border-r border-input bg-zinc-100">
+                        <div className="flex h-7 p-1 px-2 border-r border-input bg-zinc-100">
                             {addSuffix}
                         </div>
                     )}
