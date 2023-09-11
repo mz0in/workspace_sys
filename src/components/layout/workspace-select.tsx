@@ -42,11 +42,8 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                 <SingleWorkspace workspace={active} />
                 <ChevronsUpDown className="w-4 h-4" />
             </PopoverTrigger>
-            <PopoverContent
-                align="start"
-                side="right"
-                className="grid grid-cols-[1fr_5px_1fr] w-fit gap-2"
-            >
+            { /* prettier-ignore */ }
+            <PopoverContent align="start" side="right" className="grid grid-cols-[1fr_5px_1fr] w-fit gap-2">
                 <div className="flex flex-col justify-between w-60">
                     <div>
                         <h1 className="text-xs font-medium pb-1">Personal Account</h1>

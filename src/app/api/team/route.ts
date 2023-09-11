@@ -3,7 +3,6 @@ import * as z from "zod";
 import { getRandomTheme } from "@/config/constants";
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { slugify } from "@/lib/utils";
 import { newTeamSchema } from "@/lib/validators/team";
 
 export async function POST(req: Request) {
@@ -15,19 +14,18 @@ export async function POST(req: Request) {
         const json = await req.json();
         const body = newTeamSchema.parse(json);
 
-        const slug = slugify(body.name);
         const teamExists = await db.team.findFirst({
             where: {
-                slug: slug,
+                slug: body.slug,
             },
         });
         if (teamExists) {
-            return new Response("Unauthorized", { status: 403 });
+            return new Response("URL already exists", { status: 403 });
         }
         const team = await db.team.create({
             data: {
                 name: body.name,
-                slug: slugify(body.name),
+                slug: body.slug,
                 color: body.color,
                 members: {
                     create: [{ userId: body.ownerId, role: "owner" }],

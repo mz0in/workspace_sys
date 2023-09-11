@@ -32,6 +32,7 @@ interface Props {
 }
 
 export const TeamOnboardingForm: React.FC<Props> = ({ user, close }) => {
+    const [loading, setLoading] = useState<boolean>(false);
     const [step, setStep] = useState<string>("name");
     const form = useZodForm({
         schema: newTeamSchema,
@@ -46,33 +47,34 @@ export const TeamOnboardingForm: React.FC<Props> = ({ user, close }) => {
         mode: "onChange",
     });
     useEffect(() => {
-        const errs = Object.keys(form.formState.errors);
-        if (form.formState.isSubmitting) {
+        if (!form.formState.isValid) {
+            const error = Object.keys(form.formState.errors);
             const step1 = ["name", "slug"];
             const step2 = ["emails"];
-            if (step1.some((err) => errs.includes(err))) setStep("name");
-            else if (step2.some((err) => errs.includes(err))) setStep("invite");
+            if (step1.some((err) => error.includes(err))) setStep("name");
+            else if (step2.some((err) => error.includes(err))) setStep("invite");
         }
     }, [form.formState]);
     const router = useRouter();
     async function handleSumbit(data: z.infer<typeof newTeamSchema>) {
-        console.log(data);
-        // const response = await fetch("/api/team", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         ...data,
-        //     }),
-        // });
-        // if (!response?.ok) {
-        //     toast({
-        //         title: "Something went wrong",
-        //         description: "Your workspace was not updated. Please try again.",
-        //         variant: "destructive",
-        //     });
-        // }
+        setLoading(true);
+        const response = await fetch("/api/team", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...data,
+            }),
+        });
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong",
+                description: "Your workspace was not updated. Please try again.",
+                variant: "destructive",
+            });
+        }
+        setLoading(false);
         close();
         router.refresh();
     }
@@ -96,7 +98,11 @@ export const TeamOnboardingForm: React.FC<Props> = ({ user, close }) => {
                 ) : (
                     <div className="space-y-2">
                         <WorkspaceStep form={form} />
-                        <ButtonControls prevStep="invite" updateStep={(next) => setStep(next)} />
+                        <ButtonControls
+                            prevStep="invite"
+                            updateStep={(next) => setStep(next)}
+                            loading={loading}
+                        />
                     </div>
                 )}
             </form>

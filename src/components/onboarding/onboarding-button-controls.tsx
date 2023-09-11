@@ -2,18 +2,22 @@
 
 import React from "react";
 
+import { Loader } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 interface ButtonControlProps {
     prevStep?: string;
     nextStep?: string;
     updateStep: (next: string) => void;
+    loading?: boolean;
 }
 
 export const ButtonControls: React.FC<ButtonControlProps> = ({
     prevStep,
     nextStep,
     updateStep,
+    loading,
 }) => {
     return (
         <div className="flex justify-end w-full pt-2 gap-2">
@@ -43,7 +47,8 @@ export const ButtonControls: React.FC<ButtonControlProps> = ({
                     Next
                 </Button>
             ) : (
-                <Button size="sm" type="submit" variant="primary">
+                <Button size="sm" type="submit" variant="primary" disabled={loading}>
+                    {loading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
                     Create
                 </Button>
             )}

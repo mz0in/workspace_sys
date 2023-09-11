@@ -15,7 +15,7 @@ interface Props {
 export const CreateNewTeam: React.FC<Props> = ({ user }) => {
     const [open, setOpen] = useState<boolean>(false);
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger className="flex items-center justify-start p-1 mt-1 rounded-md w-full h-8 text-sm hover:bg-[#F3F5F6]">
                 <PlusSquare className="w-4 h-4 me-1" /> Create new team
             </DialogTrigger>

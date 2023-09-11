@@ -159,8 +159,8 @@ model Workspace {
   // a workspace can either belong to a user or a team
   ownerUserId String?
   ownerTeamId String?
-  ownerUser   User?   @relation(fields: [ownerUserId], references: [id], onDelete: SetNull)
-  ownerTeam   Team?   @relation(fields: [ownerTeamId], references: [id], onDelete: SetNull)
+  ownerUser   User?   @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  ownerTeam   Team?   @relation(fields: [ownerTeamId], references: [id], onDelete: Cascade)
 
   // users that have access to the workspace
   members WorkspaceMembership[]
