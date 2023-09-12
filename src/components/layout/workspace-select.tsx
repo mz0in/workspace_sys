@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import type { TeamWithMetadata } from "@/types";
 import type { Workspace } from "@prisma/client";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Settings } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -35,6 +36,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
             return workspaces.filter((w) => w.ownerTeamId === active.ownerTeamId);
         }
     });
+    const [settingsLink, setSettingsLink] = useState<string>("/settings");
 
     return (
         <Popover>
@@ -53,6 +55,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                                 setDisplayWorkspaces(() => {
                                     return workspaces.filter((w) => w.type === "personal");
                                 });
+                                setSettingsLink("/settings");
                             }}
                         >
                             <UserAvatar user={user} />
@@ -67,6 +70,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                                     setDisplayWorkspaces(() => {
                                         return team.team.ownedWorkspaces;
                                     });
+                                    setSettingsLink(`${team.team.slug}/settings`);
                                 }}
                             >
                                 <SingleTeam teamInfo={team} />
@@ -88,7 +92,15 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                             user={user}
                         />
                     </div>
-                    <CreateWorkspaceButton userId={user.id} />
+                    <div>
+                        <Link 
+                            href={settingsLink} 
+                            className="flex items-center justify-start cursor-pointer p-1 mt-1 rounded-md w-full h-8 text-sm hover:bg-[#F3F5F6]"
+                        >
+                            <Settings className="w-4 h-4 me-1" /> Settings
+                        </Link>
+                        <CreateWorkspaceButton userId={user.id} />
+                    </div>
                 </div>
             </PopoverContent>
         </Popover>
