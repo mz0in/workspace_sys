@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import type { TeamWithMetadata } from "@/types";
 import type { Workspace } from "@prisma/client";
-import { Check, ChevronsUpDown, Settings } from "lucide-react";
+import { Check, ChevronsUpDown, Settings, Ghost } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -61,7 +61,9 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                             <UserAvatar user={user} />
                             {active.type === "personal" && <Check className="w-4 h-4" />}
                         </div>
-                        <h1 className="text-xs font-medium py-1">Teams</h1>
+                        {teams.length > 0 && (
+                            <h1 className="text-xs font-medium py-1">Teams</h1>
+                        )}
                         {teams.map((team, i) => (
                             <div
                                 key={i}
@@ -70,7 +72,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                                     setDisplayWorkspaces(() => {
                                         return team.team.ownedWorkspaces;
                                     });
-                                    setSettingsLink(`${team.team.slug}/settings`);
+                                    setSettingsLink(`/${team.team.slug}/settings`);
                                 }}
                             >
                                 <SingleTeam teamInfo={team} />
@@ -94,7 +96,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                     </div>
                     <div>
                         <Link 
-                            href={settingsLink} 
+                            href={settingsLink}
                             className="flex items-center justify-start cursor-pointer p-1 mt-1 rounded-md w-full h-8 text-sm hover:bg-[#F3F5F6]"
                         >
                             <Settings className="w-4 h-4 me-1" /> Settings
@@ -191,7 +193,7 @@ export const SingleWorkspace: React.FC<SingleWorkspaceProps> = ({ workspace }) =
             </Avatar>
             <div className="flex flex-col text-left text-xs">
                 <h1 className="font-medium">{workspace.name}</h1>
-                <h2>{workspace.type.charAt(0).toUpperCase() + workspace.type.slice(1)}</h2>
+                {/* <h2>{workspace.type.charAt(0).toUpperCase() + workspace.type.slice(1)}</h2> */}
             </div>
         </div>
     );
