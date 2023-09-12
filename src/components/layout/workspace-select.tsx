@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import type { TeamWithMetadata } from "@/types";
 import type { Workspace } from "@prisma/client";
-import { Check, ChevronsUpDown, Settings, Ghost } from "lucide-react";
+import { Check, ChevronsUpDown, Settings } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -193,7 +193,7 @@ export const SingleWorkspace: React.FC<SingleWorkspaceProps> = ({ workspace }) =
             </Avatar>
             <div className="flex flex-col text-left text-xs">
                 <h1 className="font-medium">{workspace.name}</h1>
-                {/* <h2>{workspace.type.charAt(0).toUpperCase() + workspace.type.slice(1)}</h2> */}
+                <h2>{workspace.type.charAt(0).toUpperCase() + workspace.type.slice(1)}</h2>
             </div>
         </div>
     );

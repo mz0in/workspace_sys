@@ -18,3 +18,10 @@ export const newTeamSchema = z
         emails: z.string().email().array(),
     })
     .refine((data) => validateTheme(data.color), { path: ["color"], message: "Invalid theme" });
+    
+export const editTeamSchema = z
+    .object({
+        name: z.string().min(3).max(32),
+        color: z.string()
+    })
+    .refine((data) => validateTheme(data.color), { path: ["color"], message: "Invalid theme" });
