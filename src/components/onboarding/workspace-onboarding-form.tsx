@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Loader, User, Users } from "lucide-react";
 import { ControllerRenderProps, FieldValues, UseFormReturn } from "react-hook-form";
 import * as z from "zod";
 
-import { WORKSPACE_THEMES } from "@/config/constants";
+import { THEMES } from "@/config/constants";
 import { newWorkspaceSchema } from "@/lib/validators/workspace";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -255,7 +255,7 @@ const WorkspaceInfoStep: React.FC<WorkspaceInfoProps> = ({ form }) => {
                                 </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                                {WORKSPACE_THEMES.map((theme, i) => (
+                                {THEMES.map((theme, i) => (
                                     <SelectItem key={`theme-${i}`} value={theme.value}>
                                         <div className="flex items-center gap-2">
                                             <ThemeDot color={theme.value} />

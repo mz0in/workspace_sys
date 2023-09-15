@@ -7,7 +7,7 @@ import type { Workspace } from "@prisma/client";
 import { Loader } from "lucide-react";
 import { z } from "zod";
 
-import { WORKSPACE_THEMES } from "@/config/constants";
+import { THEMES } from "@/config/constants";
 import { editWorkspaceSchema } from "@/lib/validators/workspace";
 import { Button } from "@/components/ui/button";
 import {
@@ -98,7 +98,7 @@ export const EditWorkspaceForm: React.FC<Props> = ({ workspace }) => {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    {WORKSPACE_THEMES.map((theme, i) => (
+                                    {THEMES.map((theme, i) => (
                                         <SelectItem key={`theme-${i}`} value={theme.value}>
                                             <div className="flex items-center gap-2">
                                                 <ThemeDot color={theme.value} />

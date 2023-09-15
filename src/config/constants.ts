@@ -1,4 +1,4 @@
-export const WORKSPACE_THEMES = [
+export const THEMES = [
     { value: "#27272a", label: "Zinc" },
     { value: "#ef4444", label: "Red" },
     { value: "#f97316", label: "Orange" },
@@ -18,5 +18,5 @@ export const WORKSPACE_THEMES = [
 ];
 
 export function getRandomTheme() {
-    return WORKSPACE_THEMES[Math.floor(Math.random() * WORKSPACE_THEMES.length)].value;
+    return THEMES[Math.floor(Math.random() * THEMES.length)].value;
 }

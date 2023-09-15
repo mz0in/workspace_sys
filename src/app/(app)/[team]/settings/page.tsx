@@ -1,10 +1,11 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 
-import { db } from "@/lib/database";
 import { userBelongsToTeam } from "@/lib/auth/user-permission-utils";
+import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { PageHeader, PageTitle } from "@/components/layout/page-header";
+import { TeamSettingsTabs } from "@/components/settings/team-settings";
 
 export default async function TeamSettings({ params }: { params: { team: string } }) {
     const user = await getCurrentUser();
@@ -15,9 +16,9 @@ export default async function TeamSettings({ params }: { params: { team: string 
     if (!userInTeam) {
         return notFound();
     }
-    const team = await db.team.findFirstOrThrow({ 
-        where: { 
-            slug: params.team, 
+    const team = await db.team.findFirstOrThrow({
+        where: {
+            slug: params.team,
         },
         include: {
             members: true,
@@ -26,9 +27,9 @@ export default async function TeamSettings({ params }: { params: { team: string 
     return (
         <div className="flex flex-col px-[1rem] md:px-[2rem]">
             <PageHeader>
-                <PageTitle>{team.name} Settings</PageTitle>
+                <PageTitle>Settings</PageTitle>
             </PageHeader>
-            <pre>{JSON.stringify(team, null, 2)}</pre>
+            <TeamSettingsTabs team={team} />
         </div>
     );
 }

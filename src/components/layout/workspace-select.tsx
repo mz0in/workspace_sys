@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import type { TeamWithMetadata } from "@/types";
 import type { Workspace } from "@prisma/client";
@@ -160,10 +160,10 @@ export const SingleTeam: React.FC<SingleTeamProps> = ({ teamInfo }) => {
     const members = teamInfo.team.members.length;
     return (
         <div className="flex items-center gap-2">
-            <Avatar className="w-9 h-9">
+            <Avatar className="w-8 h-8">
                 <AvatarFallback
                     style={{ backgroundColor: teamInfo.team.color }}
-                    className="text-white text-xl"
+                    className="text-white text-lg"
                 >
                     {teamInfo.team.name.charAt(0).toUpperCase()}
                 </AvatarFallback>
@@ -183,10 +183,10 @@ interface SingleWorkspaceProps {
 export const SingleWorkspace: React.FC<SingleWorkspaceProps> = ({ workspace }) => {
     return (
         <div className="flex items-center gap-2">
-            <Avatar className="w-9 h-9">
+            <Avatar className="w-8 h-8">
                 <AvatarFallback
                     style={{ backgroundColor: workspace.color }}
-                    className="text-white text-xl"
+                    className="text-white text-lg"
                 >
                     {workspace.name.charAt(0).toUpperCase()}
                 </AvatarFallback>

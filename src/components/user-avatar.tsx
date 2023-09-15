@@ -11,7 +11,7 @@ export interface Props {
 export const UserAvatar: React.FC<Props> = ({ user }) => {
     return (
         <div className="flex items-center gap-2">
-            <Avatar className="w-9 h-9">
+            <Avatar className="w-8 h-8">
                 <AvatarImage src={user.image ?? undefined} alt="" />
                 <AvatarFallback>{user.name?.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
