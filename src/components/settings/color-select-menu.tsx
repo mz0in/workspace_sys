@@ -4,7 +4,7 @@ import React from "react";
 
 import { FieldValues, UseFormReturn } from "react-hook-form";
 
-import { THEMES } from "@/config/constants";
+import { THEMES } from "@/config/themes";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import {
     Select,

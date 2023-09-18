@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import { validateTheme } from "@/lib/validators/workspace";
+import { validateTheme } from "@/config/themes";
 
 export const newTeamSchema = z
     .object({

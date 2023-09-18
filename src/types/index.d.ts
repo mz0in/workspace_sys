@@ -13,6 +13,7 @@ export type UserSubscriptionPlan = SubscriptionPlan &
         isPremium: boolean;
     };
 
+// TODO: Refactor this.
 export type TeamWithMetadata = TeamMembership & {
     team: Team & {
         members: User[];

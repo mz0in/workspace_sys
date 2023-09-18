@@ -2,9 +2,8 @@
 
 import React from "react";
 
-import { Loader } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 interface ButtonControlProps {
     prevStep?: string;
@@ -47,10 +46,7 @@ export const ButtonControls: React.FC<ButtonControlProps> = ({
                     Next
                 </Button>
             ) : (
-                <Button size="sm" type="submit" variant="primary" disabled={loading}>
-                    {loading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
-                    Create
-                </Button>
+                <SubmitButton loading={loading ?? false}>Create</SubmitButton>
             )}
         </div>
     );

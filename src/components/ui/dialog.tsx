@@ -3,13 +3,33 @@
 import * as React from "react";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 const Dialog = DialogPrimitive.Root;
 
-const DialogTrigger = DialogPrimitive.Trigger;
+const triggerVariants = cva(
+    "flex items-center justify-start p-1 mt-1 rounded-md w-full h-7 text-sm ",
+    {
+        variants: {
+            variant: {
+                default: "hover:bg-[#F3F5F6]",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+        },
+    },
+);
+
+const DialogTrigger = ({ className, ...props }: DialogPrimitive.DialogTriggerProps) => (
+    <DialogPrimitive.Trigger
+        className={cn(triggerVariants({ variant: "default" }), className)}
+        {...props}
+    />
+);
 
 const DialogPortal = ({ className, ...props }: DialogPrimitive.DialogPortalProps) => (
     <DialogPrimitive.Portal className={cn(className)} {...props} />

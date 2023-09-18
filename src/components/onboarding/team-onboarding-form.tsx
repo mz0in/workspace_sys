@@ -7,7 +7,7 @@ import type { User } from "next-auth";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
-import { getRandomTheme } from "@/config/constants";
+import { getRandomTheme } from "@/config/themes";
 import { slugify } from "@/lib/utils";
 import { newTeamSchema } from "@/lib/validators/team";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";

@@ -15,7 +15,7 @@ export function DeleteTeam({ team }: Props) {
     return (
         <FormGroup separate={false} className="w-1/2">
             <FormGroupTitle>Delete team</FormGroupTitle>
-            <p className="text-sm text-zinc-500">
+            <p className="text-xs text-zinc-500">
                 <strong className="text-black">Warning:</strong> Deleting the team will also
                 permanently delete all data associated with it. This action can&apos;t be undone and
                 your data cannot be recovered.

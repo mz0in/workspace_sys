@@ -20,3 +20,11 @@ export const THEMES = [
 export function getRandomTheme() {
     return THEMES[Math.floor(Math.random() * THEMES.length)].value;
 }
+
+export function validateTheme(color: string): boolean {
+    const validOptions = THEMES.map((w) => w.value);
+    if (!validOptions.includes(color)) {
+        return false;
+    }
+    return true;
+}

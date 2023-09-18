@@ -7,7 +7,7 @@ import type { Workspace } from "@prisma/client";
 import { Loader } from "lucide-react";
 import { z } from "zod";
 
-import { THEMES } from "@/config/constants";
+import { THEMES } from "@/config/themes";
 import { editWorkspaceSchema } from "@/lib/validators/workspace";
 import { Button } from "@/components/ui/button";
 import {

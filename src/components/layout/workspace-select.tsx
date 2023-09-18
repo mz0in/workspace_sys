@@ -14,8 +14,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { CreateNewTeam } from "@/components/create-new-team";
+import { CreateNewWorkspace } from "@/components/create-new-workspace";
 import { UserAvatar } from "@/components/user-avatar";
-import { CreateWorkspaceButton } from "@/components/workspace/workspace-create-button";
 
 const hoverClass =
     "flex items-center justify-between cursor-pointer outline-none p-1 rounded-md hover:bg-[#F3F5F6]";
@@ -36,6 +36,15 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
             return workspaces.filter((w) => w.ownerTeamId === active.ownerTeamId);
         }
     });
+    const [activeTeam, setActiveTeam] = useState<string | undefined>(() => {
+        if (active.type === "team") {
+            const team = teams.filter((team) => team.team.id === active.ownerTeamId);
+            if (!team) return undefined;
+            return team[0].team.slug;
+        }
+        return undefined;
+    });
+    const [displayType, setDisplayType] = useState<"personal" | "team">(active.type);
     const [settingsLink, setSettingsLink] = useState<string>("/settings");
 
     return (
@@ -56,6 +65,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                                     return workspaces.filter((w) => w.type === "personal");
                                 });
                                 setSettingsLink("/settings");
+                                setActiveTeam(undefined);
                             }}
                         >
                             <UserAvatar user={user} />
@@ -73,6 +83,7 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                                         return team.team.ownedWorkspaces;
                                     });
                                     setSettingsLink(`/${team.team.slug}/settings`);
+                                    setActiveTeam(team.team.slug);
                                 }}
                             >
                                 <SingleTeam teamInfo={team} />
@@ -97,11 +108,11 @@ export const WorkspaceSelect: React.FC<Props> = ({ workspaces, user, teams }) =>
                     <div>
                         <Link 
                             href={settingsLink}
-                            className="flex items-center justify-start cursor-pointer p-1 mt-1 rounded-md w-full h-8 text-sm hover:bg-[#F3F5F6]"
+                            className="flex items-center justify-start cursor-pointer p-[2px] mt-1 rounded-md w-full h-7 text-sm hover:bg-[#F3F5F6]"
                         >
                             <Settings className="w-4 h-4 me-1" /> Settings
                         </Link>
-                        <CreateWorkspaceButton userId={user.id} />
+                        <CreateNewWorkspace userId={user.id} type={displayType} teamSlug={activeTeam} />
                     </div>
                 </div>
             </PopoverContent>

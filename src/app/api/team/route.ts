@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import { getRandomTheme } from "@/config/constants";
+import { getRandomTheme } from "@/config/themes";
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { newTeamSchema } from "@/lib/validators/team";
