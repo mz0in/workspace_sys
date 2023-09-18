@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 interface Props {
     children: React.ReactNode;
     loading: boolean;
-    disable: boolean;
+    disable?: boolean;
 }
 
 export function SubmitButton({ children, disable = false, loading }: Props) {
