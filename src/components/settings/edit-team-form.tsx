@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { toast } from "@/components/ui/use-toast";
 import { ColorSelectMenu } from "@/components/settings/color-select-menu";
 
 interface Props {
@@ -36,7 +37,30 @@ export function EditTeamForm({ team }: Props) {
     });
     const router = useRouter();
     async function handleSubmit(data: z.infer<typeof editTeamSchema>) {
+        if (!form.formState.isDirty) return;
         setLoading(true);
+        const response = await fetch(`/api/team/${team.slug}/edit`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...data,
+            }),
+        });
+        setLoading(false);
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong",
+                description: "Unable to create new workspace",
+                variant: "destructive",
+            });
+        }
+        toast({
+            title: "Saved",
+            description: "Your team information has been updated",
+        });
+        router.refresh();
     }
     const theme = form.watch("color");
     return (
@@ -80,14 +104,13 @@ export function EditTeamForm({ team }: Props) {
                                 <FormControl>
                                     <Input
                                         addPrefix="workspace.com/"
+                                        disabled
                                         autoComplete="off"
                                         {...field}
                                     />
                                 </FormControl>
                                 <FormMessage />
-                                <FormDescription>
-                                    A unique identifier for your team.
-                                </FormDescription>
+                                <FormDescription>You cannot change this field.</FormDescription>
                             </FormItem>
                         )}
                     />

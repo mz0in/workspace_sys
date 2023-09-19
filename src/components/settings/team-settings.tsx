@@ -25,7 +25,7 @@ export function TeamSettingsTabs({ team }: Props) {
                     <Separator className="my-2" />
                 </div>
                 <EditTeamForm team={team} />
-                <DeleteTeam team={{ id: team.id, name: team.name }} />
+                <DeleteTeam team={{ slug: team.slug, name: team.name }} />
             </TabsContent>
         </Tabs>
     );

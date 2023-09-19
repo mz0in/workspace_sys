@@ -15,4 +15,3 @@
 ## Specific AMS Refactor Tasks
 - Role badges
 - Settings page structure
-- Create a reusable "delete alert" component?

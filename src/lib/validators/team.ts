@@ -21,8 +21,8 @@ export const newTeamSchema = z
 
 export const editTeamSchema = z
     .object({
-        name: z.string().min(3).max(32),
         slug: z.string().min(3).max(32),
         color: z.string(),
+        name: z.string().min(3).max(32),
     })
     .refine((data) => validateTheme(data.color), { path: ["color"], message: "Invalid theme" });
