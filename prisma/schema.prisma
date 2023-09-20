@@ -76,6 +76,7 @@ model User {
 
   activeWorkspaceId   String?
   WorkspaceMembership WorkspaceMembership[]
+  ownedWorkspaces     Workspace[]
 
   @@index([id])
   @@index([email])
@@ -112,10 +113,12 @@ model Team {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  name String
-  slug String @unique
+  name  String
+  slug  String @unique
+  color String @default("#4f46e5")
 
-  members TeamMembership[]
+  members         TeamMembership[]
+  ownedWorkspaces Workspace[]
 
   @@index([id])
   @@map(name: "teams")
@@ -154,8 +157,16 @@ model Workspace {
   color String        @default("#4f46e5")
 
   // a workspace can either belong to a user or a team
+  ownerUserId String?
+  ownerTeamId String?
+  ownerUser   User?   @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  ownerTeam   Team?   @relation(fields: [ownerTeamId], references: [id], onDelete: Cascade)
+
+  // users that have access to the workspace
   members WorkspaceMembership[]
 
   @@index([id])
+  @@index([ownerUserId])
+  @@index([ownerTeamId])
   @@map(name: "workspaces")
 }

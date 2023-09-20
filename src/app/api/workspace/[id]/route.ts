@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import { userBelongsToWorkspace } from "@/lib/auth/user-belongs-to-workspace";
+import { userBelongsToWorkspace } from "@/lib/auth/user-permission-utils";
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { editWorkspaceSchema } from "@/lib/validators/workspace";
@@ -106,7 +106,6 @@ export async function DELETE(req: Request, ctx: z.infer<typeof routeCtxSchema>) 
                 id: workspace.id,
             },
         });
-        console.log('here2');
         return new Response(null, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {

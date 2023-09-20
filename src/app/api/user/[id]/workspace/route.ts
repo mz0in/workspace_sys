@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-import { userBelongsToWorkspace } from "@/lib/auth/user-belongs-to-workspace";
+import { userBelongsToWorkspace } from "@/lib/auth/user-permission-utils";
 import { db } from "@/lib/database";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { updateUserWorkspaceSchema } from "@/lib/validators/user";

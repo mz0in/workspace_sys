@@ -1,4 +1,4 @@
-import type { User, Workspace, WorkspaceMembership } from "@prisma/client";
+import type { TeamMembership, User, Workspace, WorkspaceMembership } from "@prisma/client";
 
 export type SubscriptionPlan = {
     name: string;
@@ -12,6 +12,14 @@ export type UserSubscriptionPlan = SubscriptionPlan &
         stripeCurrentPeriodEnd: number;
         isPremium: boolean;
     };
+
+// TODO: Refactor this.
+export type TeamWithMetadata = TeamMembership & {
+    team: Team & {
+        members: User[];
+        ownedWorkspaces: Workspace[];
+    };
+};
 
 export type WorkspaceWithUser = WorkspaceMembership & {
     email: string;

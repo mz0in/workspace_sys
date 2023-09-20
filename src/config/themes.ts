@@ -1,4 +1,4 @@
-export const WORKSPACE_THEMES = [
+export const THEMES = [
     { value: "#27272a", label: "Zinc" },
     { value: "#ef4444", label: "Red" },
     { value: "#f97316", label: "Orange" },
@@ -16,3 +16,15 @@ export const WORKSPACE_THEMES = [
     { value: "#ec4899", label: "Pink" },
     { value: "#f43f5e", label: "Rose" },
 ];
+
+export function getRandomTheme() {
+    return THEMES[Math.floor(Math.random() * THEMES.length)].value;
+}
+
+export function validateTheme(color: string): boolean {
+    const validOptions = THEMES.map((w) => w.value);
+    if (!validOptions.includes(color)) {
+        return false;
+    }
+    return true;
+}

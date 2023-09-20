@@ -17,6 +17,7 @@ import { TypeOf, ZodSchema } from "zod";
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 
 /**
  * Custom useForm wrapper hook that uses the zod resolver from react-hook-form.
@@ -180,6 +181,27 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+const FormGroup = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement> & { separate?: boolean }
+>(({ className, children, separate = true, ...props }, ref) => {
+    return (
+        <div ref={ref} className={cn("space-y-3", className)} {...props}>
+            {children}
+            {separate && <Separator />}
+        </div>
+    );
+});
+FormGroup.displayName = "FormGroup";
+
+const FormGroupTitle = React.forwardRef<
+    HTMLHeadingElement,
+    React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => {
+    return <h1 ref={ref} className={cn("font-medium text-lg my-2", className)} {...props} />;
+});
+FormGroupTitle.displayName = "FormGroupTitle";
+
 export {
     useFormField,
     Form,
@@ -189,4 +211,6 @@ export {
     FormDescription,
     FormMessage,
     FormField,
+    FormGroup,
+    FormGroupTitle,
 };
