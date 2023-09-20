@@ -37,7 +37,6 @@ export function EditTeamForm({ team }: Props) {
     });
     const router = useRouter();
     async function handleSubmit(data: z.infer<typeof editTeamSchema>) {
-        if (!form.formState.isDirty) return;
         setLoading(true);
         const response = await fetch(`/api/team/${team.slug}/edit`, {
             method: "PATCH",

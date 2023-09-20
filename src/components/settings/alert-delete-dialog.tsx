@@ -42,8 +42,8 @@ export function AlertDeleteDialog({ deleteItem, deleteConfirmText, onDelete }: P
                         </span>
                     </AlertDialogDescription>
                     <Label className="text-sm font-normal pt-2">
-                        Enter the {deleteItem} name <span className="font-medium">{deleteConfirmText}</span>{" "}
-                        to confirm.
+                        Enter the {deleteItem} name{" "}
+                        <span className="font-medium">{deleteConfirmText}</span> to confirm.
                     </Label>
                     <Input onChange={(e) => setConfirm(e.target.value)} />
                 </AlertDialogHeader>
